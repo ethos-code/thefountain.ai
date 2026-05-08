@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FOUNTAIN® — the world's most beautiful AI pen</title>
+<meta name="description" content="FOUNTAIN® is an AI writing instrument with augmented reality, LiDAR sensing, and gesture recognition.">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="color-scheme" content="dark">
+<meta property="og:title" content="FOUNTAIN®">
+<meta property="og:description" content="The world's most beautiful AI pen.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #f4f4f1;
+    --paper: #0a0a0a;
+    --margin: clamp(20px, 4vw, 48px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+    overscroll-behavior: none;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .stage {
+    position: absolute;
+    inset: 0;
+  }
+
+  .stage iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    background: var(--paper);
+  }
+
+  .ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    padding: var(--margin);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    z-index: 2;
+    opacity: 0;
+    animation: fade 1000ms ease-out 200ms forwards;
+  }
+
+  .ui > * > * { pointer-events: auto; }
+
+  @keyframes fade {
+    to { opacity: 1; }
+  }
+
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .wordmark {
+    font-size: clamp(15px, 1.4vw, 17px);
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    line-height: 1;
+  }
+
+  .wordmark sup {
+    font-size: 0.5em;
+    font-weight: 400;
+    margin-left: 0.12em;
+    vertical-align: super;
+    opacity: 0.6;
+  }
+
+  .status {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    line-height: 1;
+    text-align: right;
+  }
+
+  .bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+  }
+
+  .tagline {
+    margin: 0;
+    font-size: clamp(20px, 2.6vw, 30px);
+    font-weight: 300;
+    letter-spacing: -0.014em;
+    line-height: 1.1;
+    max-width: 22ch;
+  }
+
+  .tagline em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .case-link {
+    color: var(--ink);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid color-mix(in oklab, var(--ink) 28%, transparent);
+    padding-bottom: 2px;
+    transition: border-color 200ms ease, transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    line-height: 1.4;
+    white-space: nowrap;
+    display: inline-block;
+  }
+
+  .case-link:hover,
+  .case-link:focus-visible {
+    border-bottom-color: var(--ink);
+    transform: translateX(2px);
+    outline: none;
+  }
+
+  @media (max-width: 640px) {
+    .bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .status { text-align: right; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ui { animation: none; opacity: 1; }
+    .case-link { transition: border-color 200ms ease; }
+    .case-link:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="stage">
+    <iframe
+      src="https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1KqRUQ/"
+      title="FOUNTAIN — interactive 3D rendering"
+      allow="autoplay; fullscreen; xr-spatial-tracking"
+      loading="eager"></iframe>
+  </div>
+
+  <div class="ui">
+    <header class="top">
+      <div class="wordmark">FOUNTAIN<sup>®</sup></div>
+      <div class="status">In development<br>MMXXVI</div>
+    </header>
+
+    <div></div>
+
+    <footer class="bottom">
+      <p class="tagline">The world&rsquo;s most<br>beautiful AI pen.</p>
+      <a class="case-link" href="https://www.behance.net/gallery/109944535/FOUNTAIN-The-worlds-most-beautiful-AI-pen" rel="noopener">Read the case study &rarr;</a>
+    </footer>
+  </div>
+</body>
+</html>
