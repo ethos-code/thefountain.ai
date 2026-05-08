@@ -1,0 +1,77 @@
+---
+---
+
+<div class="beauty">
+  <div class="beauty-content">
+    <h2 class="reveal">Why we made it beautiful.</h2>
+    <p class="reveal">
+      Most AI hardware is a black plastic puck. It works, but it doesn't belong.
+    </p>
+    <p class="reveal">
+      AI lives close to us — on our bodies, on our desks, in the homes of the
+      people we love. It deserves the same care we give the things we already
+      keep around us. A wedding ring. A reading lamp. A favorite coat.
+    </p>
+    <p class="reveal accent">
+      So we made Fountain something you would choose, not just tolerate.
+      <em>The materials, the weight, the finish.</em> The thinking shows.
+    </p>
+  </div>
+</div>
+
+<style>
+  .beauty {
+    width: 100%;
+    height: 100%;
+    background: var(--color-paper);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: clamp(48px, 10vh, 120px) clamp(24px, 8vw, 128px);
+  }
+  .beauty-content {
+    max-width: 640px;
+  }
+  .beauty-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 1.4em;
+    max-width: 18ch;
+  }
+  .beauty-content p {
+    font-family: var(--font-body);
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.5;
+    margin: 0 0 1.4em;
+    max-width: 60ch;
+    color: color-mix(in oklab, var(--color-ink) 92%, transparent);
+  }
+  .beauty-content .accent {
+    font-family: var(--font-serif);
+    font-size: clamp(19px, 1.9vw, 24px);
+    line-height: 1.4;
+    color: var(--color-ink);
+    margin-bottom: 0;
+  }
+  .beauty-content .accent em {
+    font-style: italic;
+    font-weight: 400;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1000ms var(--ease-out-refined),
+                transform 1000ms var(--ease-out-refined);
+  }
+  :global([data-revealed="true"]) .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global([data-revealed="true"]) .reveal:nth-child(1) { transition-delay: 0ms; }
+  :global([data-revealed="true"]) .reveal:nth-child(2) { transition-delay: 160ms; }
+  :global([data-revealed="true"]) .reveal:nth-child(3) { transition-delay: 320ms; }
+  :global([data-revealed="true"]) .reveal:nth-child(4) { transition-delay: 500ms; }
+</style>

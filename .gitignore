@@ -1,4 +1,25 @@
-.DS_Store
-*.log
+# Build output
+dist/
+.astro/
+
+# Dependencies
 node_modules/
+
+# Environment
+.env
+.env.production
+.env.development
+
+# macOS
+.DS_Store
+
+# Editors
 .vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Source-only / not committed
+*.heic
