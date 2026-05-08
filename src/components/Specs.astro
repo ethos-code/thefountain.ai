@@ -13,14 +13,16 @@ const callouts: Callout[] = [
   { pen: '4',   stand: '12',  unit: 'B params', caption: 'on-device foundation model' },
 ];
 
-const fineprint: string[] = [
-  '4 – 8 MP RGB-D camera (Stand also has LiDAR)',
-  '3 – 6 mic beamforming array, spatial audio',
-  '256 GB – 1 TB on-device storage',
-  'Wi-Fi 7 · Bluetooth 6 · UWB · Thread · Matter',
-  'Magnetic wireless charging (Pen) · USB-C with charging puck (Stand)',
-  'Machined / anodized aluminum · sapphire crystal lens / optical-grade glass',
-  '18 g · IP54 (Pen) · 14 × 4 cm (Stand)',
+interface SpecRow { label: string; value: string; }
+
+const fineprint: SpecRow[] = [
+  { label: 'Camera',       value: '4 – 8 MP RGB-D · LiDAR on Stand' },
+  { label: 'Microphones',  value: '3 – 6 mic beamforming · spatial audio' },
+  { label: 'Storage',      value: '256 GB – 1 TB on-device' },
+  { label: 'Connectivity', value: 'Wi-Fi 7 · Bluetooth 6 · UWB · Thread · Matter' },
+  { label: 'Charging',     value: 'Magnetic wireless on Pen · USB-C puck on Stand' },
+  { label: 'Materials',    value: 'Machined aluminum · sapphire lens · optical-grade glass' },
+  { label: 'Form',         value: '18 g · IP54 (Pen) · 14 × 4 cm (Stand)' },
 ];
 ---
 
@@ -52,7 +54,12 @@ const fineprint: string[] = [
     <p class="legend reveal" aria-hidden="true">Pen / Stand</p>
 
     <ul class="fineprint reveal">
-      {fineprint.map((line) => <li>{line}</li>)}
+      {fineprint.map(({ label, value }) => (
+        <li>
+          <span class="fp-label">{label}</span>
+          <span class="fp-value">{value}</span>
+        </li>
+      ))}
     </ul>
 
     <p class="philosophy reveal">
@@ -213,18 +220,31 @@ const fineprint: string[] = [
     list-style: none;
     margin: 0 0 clamp(40px, 6vh, 64px);
     padding: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 8px;
-    padding-top: clamp(32px, 5vh, 48px);
     border-top: 1px solid var(--color-hairline);
   }
   .fineprint li {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: clamp(16px, 3vw, 32px);
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .fp-label {
     font-family: var(--font-mono);
-    font-size: clamp(12px, 1.05vw, 14px);
-    line-height: 1.5;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
     color: var(--color-meta);
+    white-space: nowrap;
+  }
+  .fp-value {
+    font-family: var(--font-mono);
+    font-size: clamp(13px, 1.1vw, 15px);
+    line-height: 1.5;
     letter-spacing: 0;
+    color: var(--color-ink-muted);
+    text-align: right;
   }
 
   .philosophy {
