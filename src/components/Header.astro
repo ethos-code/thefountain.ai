@@ -3,16 +3,20 @@ import { sections } from '../lib/sections';
 ---
 
 <header class="header">
-  <button
-    type="button"
-    class="brand"
-    data-menu-trigger
-    aria-label="Open navigation menu"
-    aria-controls="menu-sheet"
-    aria-expanded="false"
-  >
-    FOUNTAIN
-  </button>
+  <div class="header-frame">
+    <div class="header-frame-inner">
+      <button
+        type="button"
+        class="brand"
+        data-menu-trigger
+        aria-label="Open navigation menu"
+        aria-controls="menu-sheet"
+        aria-expanded="false"
+      >
+        FOUNTAIN<sup aria-hidden="true">&reg;</sup>
+      </button>
+    </div>
+  </div>
 
   <div class="menu-sheet" id="menu-sheet" data-menu-sheet hidden>
     <button type="button" class="menu-close" data-menu-close aria-label="Close menu">
@@ -71,7 +75,12 @@ import { sections } from '../lib/sections';
         const el = document.getElementById(id);
         if (!el) return;
         e.preventDefault();
-        el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        const lenis = window.lenis;
+        if (lenis && !reduceMotion) {
+          lenis.scrollTo(el, { duration: 1.6 });
+        } else {
+          el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        }
         history.replaceState(null, '', `#${id}`);
         setTimeout(close, 220);
       });
@@ -81,19 +90,32 @@ import { sections } from '../lib/sections';
 
 <style>
   .header {
-    position: fixed;
-    inset: 0 0 auto 0;
-    height: 0;
-    z-index: 100;
     pointer-events: none;
+  }
+
+  .header-frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0;
+    z-index: 110;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+  }
+  .header-frame-inner {
+    position: relative;
+    width: 100%;
+    max-width: var(--frame-max);
+    height: 0;
   }
 
   .brand {
     pointer-events: auto;
-    position: fixed;
-    top: clamp(20px, 4vh, 36px);
-    left: clamp(24px, 6vw, 96px);
-    z-index: 110;
+    position: absolute;
+    top: clamp(28px, 5vh, 56px);
+    left: 25%;            /* aligns with col-2 grid line */
     background: transparent;
     border: 0;
     padding: 0;
@@ -101,20 +123,30 @@ import { sections } from '../lib/sections';
     color: #FFFFFF;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 16px;
-    letter-spacing: -0.005em;
+    font-size: clamp(36px, 5vw, 64px);
+    letter-spacing: -0.034em;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 0.98;
     cursor: pointer;
     mix-blend-mode: difference;
-    transition: opacity 200ms ease, letter-spacing 240ms var(--ease-out-refined);
+    transition: opacity 200ms ease;
   }
-  .brand:hover {
-    letter-spacing: 0.01em;
+  .brand sup {
+    font-size: 0.36em;
+    font-weight: 500;
+    letter-spacing: 0;
+    margin-left: 0.06em;
+    vertical-align: super;
+    text-transform: none;
   }
   .brand:focus-visible {
     outline: 1px dashed currentColor;
-    outline-offset: 6px;
+    outline-offset: 8px;
+  }
+  @media (max-width: 720px) {
+    .brand {
+      left: clamp(20px, 6vw, 32px);
+    }
   }
 
   .menu-sheet {

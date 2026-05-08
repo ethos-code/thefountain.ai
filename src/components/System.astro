@@ -20,9 +20,6 @@
       </p>
     </div>
 
-    <p class="forms reveal" aria-label="Pen and Stand">
-      <span>Pen</span><span class="sep" aria-hidden="true">·</span><span>Stand</span>
-    </p>
   </div>
 </div>
 
@@ -62,27 +59,7 @@
     font-weight: 500;
   }
 
-  .forms {
-    display: flex;
-    align-items: baseline;
-    gap: clamp(16px, 2.4vw, 28px);
-    margin: 0;
-    padding-top: clamp(32px, 5vh, 48px);
-    border-top: 1px solid var(--color-hairline);
-    font-family: var(--font-display);
-    font-size: clamp(32px, 4.4vw, 56px);
-    font-weight: 600;
-    letter-spacing: -0.04em;
-    line-height: 1;
-    color: var(--color-ink);
-  }
-  .forms .sep {
-    color: var(--color-meta);
-    font-weight: 400;
-  }
-
   [data-revealed="true"] header { transition-delay: 0ms; }
   [data-revealed="true"] .copy .lead { transition-delay: 200ms; }
   [data-revealed="true"] .copy p:nth-child(2) { transition-delay: 360ms; }
-  [data-revealed="true"] .forms { transition-delay: 540ms; }
 </style>
