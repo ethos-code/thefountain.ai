@@ -48,10 +48,11 @@ const { iframeUrl } = Astro.props;
   }
   .wordmark {
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 13px;
+    font-weight: 700;
+    font-size: 16px;
     letter-spacing: -0.005em;
     line-height: 1;
+    text-transform: uppercase;
   }
   .status-mark {
     font-family: var(--font-mono);
@@ -76,6 +77,14 @@ const { iframeUrl } = Astro.props;
     border: 0;
     display: block;
     background: transparent;
+  }
+  /* Spline iframes capture wheel events for camera zoom, which traps page
+     scroll. Disable pointer events so wheel/scroll passes through. The
+     scene's own auto-rotation/animation still plays — visitors lose drag
+     orbit but get clean page scrolling. To restore interactivity, switch
+     to a click-to-engage overlay pattern. */
+  .hero-stage iframe {
+    pointer-events: none;
   }
   .hero-placeholder {
     border: 1px dashed var(--color-hairline-strong);

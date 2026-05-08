@@ -52,7 +52,7 @@ const standFineprint = [
     <ul class="callouts">
       {pinCallouts.map(({ value, unit, caption }) => (
         <li>
-          <span class="big">{value}</span>
+          <span class="big" data-count={value}>{value}</span>
           <span class="unit">{unit}</span>
           <span class="caption">{caption}</span>
         </li>
@@ -68,7 +68,7 @@ const standFineprint = [
     <ul class="callouts">
       {standCallouts.map(({ value, unit, caption }) => (
         <li>
-          <span class="big">{value}</span>
+          <span class="big" data-count={value}>{value}</span>
           <span class="unit">{unit}</span>
           <span class="caption">{caption}</span>
         </li>
@@ -85,6 +85,56 @@ const standFineprint = [
     explicit consent. Local-first by design.
   </p>
 </div>
+
+<script is:inline>
+  (() => {
+    const counters = document.querySelectorAll('[data-count]');
+    if (!counters.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const animate = (el) => {
+      const target = parseInt(el.getAttribute('data-count') || '0', 10);
+      if (Number.isNaN(target)) return;
+
+      if (reduceMotion) {
+        el.textContent = String(target);
+        return;
+      }
+
+      el.textContent = '0';
+      const duration = 1400;
+      const start = performance.now();
+
+      const tick = (now) => {
+        const t = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.floor(eased * target));
+        if (t < 1) requestAnimationFrame(tick);
+        else el.textContent = String(target);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      counters.forEach(animate);
+      return;
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !entry.target.hasAttribute('data-counted')) {
+            entry.target.setAttribute('data-counted', 'true');
+            animate(entry.target);
+          }
+        });
+      },
+      { threshold: 0.55 }
+    );
+    counters.forEach((el) => obs.observe(el));
+  })();
+</script>
 
 <style>
   .specs {

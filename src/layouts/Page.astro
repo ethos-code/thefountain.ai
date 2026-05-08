@@ -39,6 +39,18 @@ const ogImage = `${base.replace(/\/$/, '')}/og.jpg`;
     />
   </head>
   <body>
+    <div class="page-grid" aria-hidden="true">
+      <div class="page-grid-inner">
+        <span class="g-line"></span>
+        <span class="g-line"></span>
+        <span class="g-line"></span>
+      </div>
+    </div>
     <slot />
+    <script is:inline>
+      requestAnimationFrame(() => {
+        document.body.setAttribute('data-grid-ready', 'true');
+      });
+    </script>
   </body>
 </html>
