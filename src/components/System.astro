@@ -2,135 +2,112 @@
 ---
 
 <div class="system">
-  <div class="system-stage">
-    <figure class="device reveal">
-      <div class="device-render" role="img" aria-label="Pin product render placeholder"></div>
-      <figcaption>Pin</figcaption>
-    </figure>
-    <figure class="device reveal">
-      <div class="device-render" role="img" aria-label="Stand product render placeholder"></div>
-      <figcaption>Stand</figcaption>
-    </figure>
+  <header class="system-header reveal">
+    <p class="eyebrow">The system.</p>
+    <h2>Two devices.<br>One experience.</h2>
+  </header>
+
+  <div class="grid">
+    <article class="device reveal">
+      <h3 class="device-name">Pin</h3>
+      <p class="device-desc">
+        Wearable. Sees and listens close to you.
+        Projects within reach.
+      </p>
+    </article>
+    <article class="device reveal">
+      <h3 class="device-name">Stand</h3>
+      <p class="device-desc">
+        For the desk, the table, the entryway.
+        Augments the surfaces you already work and live on.
+      </p>
+    </article>
   </div>
 
-  <div class="system-copy">
-    <h2 class="reveal">Two devices. One experience.</h2>
-    <dl class="reveal">
-      <dt>Pin</dt>
-      <dd>wearable. Sees and listens close to you. Projects within reach.</dd>
-      <dt>Stand</dt>
-      <dd>for the desk, the table, the entryway. Augments the surfaces you already work and live on.</dd>
-    </dl>
-    <p class="reveal closer">
-      They share an ambient operating layer. Wherever you are, the right one
-      is with you, and what they show stays consistent.
-    </p>
-  </div>
+  <p class="closer reveal">
+    They share an ambient operating layer. Wherever you are, the right one
+    is with you, and what they show stays consistent.
+  </p>
 </div>
 
 <style>
   .system {
-    width: 100%;
-    height: 100%;
-    background: var(--color-paper);
-    display: grid;
-    grid-template-rows: 1fr auto;
-    padding: clamp(48px, 8vh, 96px) clamp(24px, 6vw, 96px);
-    gap: clamp(32px, 6vh, 64px);
+    max-width: 1280px;
+    margin: 0 auto;
   }
-  .system-stage {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(24px, 4vw, 64px);
-    align-items: end;
-    justify-items: center;
-    min-height: 0;
+  .system-header {
+    margin-bottom: clamp(64px, 10vh, 120px);
+    max-width: 760px;
   }
-  .device {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    width: 100%;
-    max-width: 360px;
-  }
-  .device-render {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    border: 1px dashed var(--color-hairline-strong);
-    border-radius: 4px;
-    background: linear-gradient(180deg, rgb(255 255 255 / 0.02), transparent);
-  }
-  .device figcaption {
+  .eyebrow {
     font-family: var(--font-mono);
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-meta);
+    margin: 0 0 24px;
   }
-  .system-copy {
-    max-width: 720px;
-  }
-  .system-copy h2 {
+  .system-header h2 {
     font-family: var(--font-display);
-    font-size: clamp(28px, 3.4vw, 40px);
+    font-size: clamp(36px, 5vw, 64px);
     font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
-    margin: 0 0 24px;
-  }
-  .system-copy dl {
-    margin: 0 0 24px;
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 8px clamp(16px, 2vw, 24px);
-    font-size: clamp(15px, 1.4vw, 18px);
-    line-height: 1.5;
-  }
-  .system-copy dt {
-    font-weight: 500;
+    letter-spacing: -0.038em;
+    line-height: 0.98;
+    margin: 0;
     color: var(--color-ink);
   }
-  .system-copy dd {
-    margin: 0;
-    color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 6vw, 96px);
+    margin-bottom: clamp(56px, 8vh, 96px);
+    border-top: 1px solid var(--color-hairline);
+    padding-top: clamp(48px, 7vh, 80px);
   }
-  .system-copy .closer {
+  .device {
+    margin: 0;
+  }
+  .device-name {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 12vw, 168px);
+    font-weight: 600;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    margin: 0 0 28px;
+    color: var(--color-ink);
+  }
+  .device-desc {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--color-ink-muted);
+    max-width: 32ch;
+    margin: 0;
+  }
+
+  .closer {
+    font-family: var(--font-body);
     font-size: clamp(15px, 1.4vw, 18px);
     line-height: 1.5;
-    color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+    letter-spacing: -0.005em;
+    color: var(--color-ink-muted);
+    max-width: 56ch;
     margin: 0;
-    max-width: 60ch;
+    border-top: 1px solid var(--color-hairline);
+    padding-top: clamp(32px, 5vh, 56px);
   }
 
   @media (max-width: 720px) {
-    .system-stage {
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .system-copy dl {
+    .grid {
       grid-template-columns: 1fr;
-      gap: 4px 0;
-    }
-    .system-copy dd {
-      margin-bottom: 12px;
+      gap: 48px;
     }
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(16px);
-    transition: opacity 900ms var(--ease-out-refined),
-                transform 900ms var(--ease-out-refined);
-  }
-  :global([data-revealed="true"]) .reveal {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  :global([data-revealed="true"]) .device:nth-child(1) { transition-delay: 0ms; }
-  :global([data-revealed="true"]) .device:nth-child(2) { transition-delay: 120ms; }
-  :global([data-revealed="true"]) .system-copy h2 { transition-delay: 280ms; }
-  :global([data-revealed="true"]) .system-copy dl { transition-delay: 400ms; }
-  :global([data-revealed="true"]) .system-copy .closer { transition-delay: 520ms; }
+  [data-revealed="true"] .system-header { transition-delay: 0ms; }
+  [data-revealed="true"] .device:nth-of-type(1) { transition-delay: 160ms; }
+  [data-revealed="true"] .device:nth-of-type(2) { transition-delay: 280ms; }
+  [data-revealed="true"] .closer { transition-delay: 440ms; }
 </style>

@@ -2,78 +2,60 @@
 ---
 
 <div class="thesis">
-  <div class="thesis-content">
-    <p class="reveal lead">You don't need another screen.</p>
-    <p class="reveal">
-      Fountain is a small, considered object. You wear one version on your body.
-      You set the other on a desk. Together they form an ambient AI — projecting
-      useful intelligence into the world where you actually live, instead of
-      pulling you back into a phone.
-    </p>
-    <p class="reveal">
-      A turn arrow on your handlebars when you're somewhere new. The freshness
-      of an avocado, on the avocado. A doorbell on a door without one. A meeting
-      on the table you're already sitting at.
-    </p>
-    <p class="reveal accent">
-      The screen looks back at you. <em>Fountain looks with you.</em>
-    </p>
-  </div>
+  <p class="reveal lead">You don't need another screen.</p>
+  <p class="reveal">
+    Fountain is a small, considered object. You wear one version on your body.
+    You set the other on a desk. Together they form an ambient AI — projecting
+    useful intelligence into the world where you actually live, instead of
+    pulling you back into a phone.
+  </p>
+  <p class="reveal">
+    A turn arrow on your handlebars when you're somewhere new. The freshness
+    of an avocado, on the avocado. A doorbell on a door without one. A meeting
+    on the table you're already sitting at.
+  </p>
+  <p class="reveal closer">
+    The screen looks back at you.<br>Fountain looks with you.
+  </p>
 </div>
 
 <style>
   .thesis {
-    width: 100%;
-    height: 100%;
-    background: var(--color-paper);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(48px, 10vh, 120px) clamp(24px, 6vw, 96px);
+    max-width: 760px;
+    margin: 0 auto;
   }
-  .thesis-content {
-    max-width: 720px;
-    width: 100%;
-  }
-  .thesis-content p {
+  .thesis p {
     font-family: var(--font-body);
-    font-size: clamp(17px, 1.6vw, 20px);
-    line-height: 1.5;
-    color: var(--color-ink);
-    margin: 0 0 1.6em;
-    max-width: 65ch;
+    font-size: clamp(18px, 1.7vw, 22px);
     font-weight: 400;
-  }
-  .thesis-content p:last-child { margin-bottom: 0; }
-  .thesis-content .lead {
-    font-size: clamp(22px, 2.4vw, 28px);
-    font-weight: 500;
+    line-height: 1.45;
     letter-spacing: -0.012em;
-    line-height: 1.25;
+    color: var(--color-ink-muted);
+    margin: 0 0 1.4em;
+    max-width: 62ch;
   }
-  .thesis-content .accent {
-    font-family: var(--font-serif);
-    font-size: clamp(20px, 2vw, 24px);
-    font-weight: 400;
-    line-height: 1.35;
+  .thesis p:last-child { margin-bottom: 0; }
+
+  .thesis .lead {
+    font-size: clamp(28px, 3.4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.032em;
+    line-height: 1.05;
     color: var(--color-ink);
-    letter-spacing: -0.005em;
+    margin-bottom: 1.6em;
   }
-  .thesis-content .accent em {
-    font-style: italic;
+
+  .thesis .closer {
+    font-size: clamp(28px, 3.4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.032em;
+    line-height: 1.05;
+    color: var(--color-ink);
+    margin-top: 2em;
   }
-  .reveal {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1000ms var(--ease-out-refined),
-                transform 1000ms var(--ease-out-refined);
-  }
-  :global([data-revealed="true"]) .reveal {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  :global([data-revealed="true"]) .reveal:nth-child(1) { transition-delay: 0ms; }
-  :global([data-revealed="true"]) .reveal:nth-child(2) { transition-delay: 150ms; }
-  :global([data-revealed="true"]) .reveal:nth-child(3) { transition-delay: 300ms; }
-  :global([data-revealed="true"]) .reveal:nth-child(4) { transition-delay: 480ms; }
+
+  [data-revealed="true"] .reveal:nth-child(1) { transition-delay: 0ms; }
+  [data-revealed="true"] .reveal:nth-child(2) { transition-delay: 140ms; }
+  [data-revealed="true"] .reveal:nth-child(3) { transition-delay: 280ms; }
+  [data-revealed="true"] .reveal:nth-child(4) { transition-delay: 480ms; }
 </style>

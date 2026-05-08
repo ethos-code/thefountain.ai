@@ -2,94 +2,49 @@
 import Page from '../layouts/Page.astro';
 import Hero from '../components/Hero.astro';
 import Thesis from '../components/Thesis.astro';
-import Scene from '../components/Scene.astro';
+import Carousel from '../components/Carousel.astro';
 import System from '../components/System.astro';
 import Beauty from '../components/Beauty.astro';
 import Specs from '../components/Specs.astro';
 import Status from '../components/Status.astro';
 import SectionNav from '../components/SectionNav.astro';
-import { scenes } from '../lib/scenes';
 import { sections } from '../lib/sections';
 
 const labelOf = (id: string) => sections.find((s) => s.id === id)?.label ?? '';
+
+const SPLINE_HERO_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1KqRUQ/';
 ---
 
 <Page>
   <SectionNav />
 
-  <main class="stack" id="stack">
-    <section
-      class="stack-card"
-      id="hero"
-      data-section="hero"
-      data-section-label={labelOf('hero')}
-      style="z-index: 1"
-    >
-      <div class="card-host"><Hero /></div>
+  <main>
+    <section id="hero" data-section="hero" data-section-label={labelOf('hero')}>
+      <Hero iframeUrl={SPLINE_HERO_URL} />
     </section>
 
-    <section
-      class="stack-card"
-      id="thesis"
-      data-section="thesis"
-      data-section-label={labelOf('thesis')}
-      style="z-index: 2"
-    >
-      <div class="card-host"><Thesis /></div>
+    <section id="thesis" data-section="thesis" data-section-label={labelOf('thesis')}>
+      <Thesis />
     </section>
 
-    {scenes.map((scene, i) => (
-      <section
-        class="stack-card"
-        id={scene.id}
-        data-section={scene.id}
-        data-section-label={labelOf(scene.id)}
-        style={`z-index: ${i + 3}`}
-      >
-        <div class="card-host">
-          <Scene image={scene.image} alt={scene.alt} label={scene.label} body={scene.body} />
-        </div>
-      </section>
-    ))}
-
-    <section
-      class="stack-card"
-      id="system"
-      data-section="system"
-      data-section-label={labelOf('system')}
-      style="z-index: 8"
-    >
-      <div class="card-host"><System /></div>
+    <section id="features" data-section="features" data-section-label={labelOf('features')}>
+      <Carousel />
     </section>
 
-    <section
-      class="stack-card"
-      id="beauty"
-      data-section="beauty"
-      data-section-label={labelOf('beauty')}
-      style="z-index: 9"
-    >
-      <div class="card-host"><Beauty /></div>
+    <section id="system" data-section="system" data-section-label={labelOf('system')}>
+      <System />
     </section>
 
-    <section
-      class="stack-card"
-      id="specs"
-      data-section="specs"
-      data-section-label={labelOf('specs')}
-      style="z-index: 10"
-    >
-      <div class="card-host"><Specs /></div>
+    <section id="beauty" data-section="beauty" data-section-label={labelOf('beauty')}>
+      <Beauty />
     </section>
 
-    <section
-      class="stack-card"
-      id="status"
-      data-section="status"
-      data-section-label={labelOf('status')}
-      style="z-index: 11"
-    >
-      <div class="card-host"><Status /></div>
+    <section id="specs" data-section="specs" data-section-label={labelOf('specs')}>
+      <Specs />
+    </section>
+
+    <section id="status" data-section="status" data-section-label={labelOf('status')}>
+      <Status />
     </section>
   </main>
 
@@ -108,7 +63,7 @@ const labelOf = (id: string) => sections.find((s) => s.id === id)?.label ?? '';
             }
           });
         },
-        { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+        { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
       );
       sections.forEach((s) => observer.observe(s));
     })();
