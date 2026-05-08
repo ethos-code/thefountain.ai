@@ -1,39 +1,20 @@
 ---
-const SPLINE_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1KqRUQ/';
+/* Spline web component renders the .splinecode file directly to a
+   transparent <canvas>, sidestepping the iframe's baked-in background.
+   Runtime script is loaded once in src/layouts/Page.astro head. */
 
-/* Note on transparency:
-   Spline iframes serve a complete viewer page with the scene data inlined
-   (the splinecode is bundled into the HTML, not exposed as a separate URL).
-   That means the iframe's background is whatever the scene was published
-   with — CSS `background: transparent` on the iframe element doesn't strip
-   pixels rendered inside it.
-
-   Two ways to get a transparent background:
-
-   1. Re-publish the scene from Spline editor with ALL of these set:
-      - Scene → Background → set color alpha to 0 (transparent)
-      - No solid background plane/cube object in the scene
-      - HDRI environment: keep for lighting, but disable its "Background"
-        visibility so the skybox doesn't render
-      - Camera: no override background
-
-   2. Or switch to <spline-viewer> web component (preferred):
-      - In Spline: File → Export → Code Export → Web Component
-      - Copy the .splinecode URL it generates
-      - Share that URL — we'll swap iframe for <spline-viewer> which
-        renders to a transparent <canvas>
-*/
+const SPLINECODE_URL = 'https://prod.spline.design/ACP80S192fjY66ON/scene.splinecode';
 ---
 
 <div class="pen-stage" data-pen-stage>
-  <iframe
-    src={SPLINE_URL}
-    title="Fountain — interactive 3D pen"
-    allow="autoplay; fullscreen; xr-spatial-tracking"
-    loading="eager"
+  <spline-viewer
+    url={SPLINECODE_URL}
+    loading-anim-type="none"
+    hint="false"
+    mouse-controls="false"
+    touch-controls="false"
     aria-hidden="true"
-    style="background: transparent;"
-  ></iframe>
+  ></spline-viewer>
 </div>
 
 <script is:inline>
@@ -103,13 +84,15 @@ const SPLINE_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1Kq
   .pen-stage[data-fade="true"] {
     opacity: 0;
   }
-  .pen-stage iframe {
+  .pen-stage spline-viewer {
+    display: block;
     width: 100%;
     height: 100%;
-    border: 0;
     background: transparent;
     pointer-events: none;
-    display: block;
+  }
+  .pen-stage spline-viewer::part(logo) {
+    display: none;
   }
 
   @media (max-width: 900px) {
