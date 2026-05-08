@@ -1,0 +1,186 @@
+---
+const pinSpecs = [
+  'Custom ARM SoC with dedicated NPU · 50 TOPS on-device',
+  '16 GB unified memory · 256 GB on-device storage',
+  'On-device foundation model · ≤ 4B parameters',
+  '4 MP RGB-D camera with depth sensor',
+  '3-microphone beamforming array · spatial audio capture',
+  '30 ANSI lumen pico-projection',
+  'Wi-Fi 7 · Bluetooth 6 · UWB precision positioning',
+  '14-hour active use · magnetic wireless charging',
+  'Machined aluminum body · sapphire crystal lens',
+  '18 g · IP54 water and dust rated',
+];
+
+const standSpecs = [
+  'Custom ARM SoC with dedicated NPU · 200 TOPS on-device',
+  '32 GB unified memory · 1 TB on-device storage',
+  'On-device foundation model · ≤ 12B parameters',
+  '8 MP RGB-D camera · LiDAR scanner',
+  '6-microphone beamforming array · spatial audio capture and playback',
+  '80 ANSI lumen pico-projection · auto-focus and surface mapping',
+  'Wi-Fi 7 · Thread · Matter · UWB · Bluetooth 6',
+  'USB-C power · wireless charging puck for the Pin',
+  'Anodized aluminum body · optical-grade glass aperture',
+  '14 cm tall · 4 cm diameter',
+];
+---
+
+<div class="specs">
+  <header class="specs-head">
+    <h2 class="reveal">An imagined spec.</h2>
+    <p class="reveal lede">
+      We're not building hardware yet. These are the targets we'd aim at —
+      what the technology of the next few years could make possible if we did.
+    </p>
+  </header>
+
+  <div class="specs-grid">
+    <section class="spec-column reveal">
+      <h3>Pin <span class="aside">— the wearable</span></h3>
+      <ul>
+        {pinSpecs.map((line) => <li>{line}</li>)}
+      </ul>
+    </section>
+    <section class="spec-column reveal">
+      <h3>Stand <span class="aside">— the desk device</span></h3>
+      <ul>
+        {standSpecs.map((line) => <li>{line}</li>)}
+      </ul>
+    </section>
+  </div>
+
+  <p class="philosophy reveal">
+    Privacy-first. All sensitive inference happens on-device. End-to-end
+    encrypted sync between Pin and Stand. No data leaves the device without
+    explicit consent. Local-first by design.
+  </p>
+</div>
+
+<style>
+  .specs {
+    width: 100%;
+    height: 100%;
+    background: var(--color-paper);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: clamp(48px, 8vh, 96px) clamp(24px, 6vw, 96px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 4vh, 48px);
+  }
+  .specs-head h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+  .specs-head .lede {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+    max-width: 56ch;
+    margin: 0;
+  }
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 4vw, 64px);
+    flex: 1;
+    min-height: 0;
+  }
+  .spec-column h3 {
+    font-family: var(--font-display);
+    font-size: clamp(15px, 1.3vw, 17px);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin: 0 0 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .spec-column h3 .aside {
+    color: var(--color-meta);
+    font-weight: 400;
+  }
+  .spec-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .spec-column li {
+    font-family: var(--font-body);
+    font-feature-settings: "tnum";
+    font-size: clamp(13px, 1.05vw, 15px);
+    line-height: 1.45;
+    color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+  }
+  .philosophy {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(14px, 1.15vw, 16px);
+    line-height: 1.5;
+    color: var(--color-meta);
+    max-width: 70ch;
+    margin: 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--color-hairline);
+  }
+
+  @media (max-width: 720px) {
+    .specs-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 900ms var(--ease-out-refined),
+                transform 900ms var(--ease-out-refined);
+  }
+  :global([data-revealed="true"]) .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global([data-revealed="true"]) .specs-head h2 { transition-delay: 0ms; }
+  :global([data-revealed="true"]) .specs-head .lede { transition-delay: 140ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) { transition-delay: 280ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) { transition-delay: 420ms; }
+  :global([data-revealed="true"]) .philosophy { transition-delay: 600ms; }
+
+  :global([data-revealed="true"]) .spec-column li {
+    animation: spec-line 700ms var(--ease-out-refined) both;
+  }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(1) { animation-delay: 320ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(2) { animation-delay: 360ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(3) { animation-delay: 400ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(4) { animation-delay: 440ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(5) { animation-delay: 480ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(6) { animation-delay: 520ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(7) { animation-delay: 560ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(8) { animation-delay: 600ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(9) { animation-delay: 640ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(1) li:nth-child(10) { animation-delay: 680ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(1) { animation-delay: 460ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(2) { animation-delay: 500ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(3) { animation-delay: 540ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(4) { animation-delay: 580ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(5) { animation-delay: 620ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(6) { animation-delay: 660ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(7) { animation-delay: 700ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(8) { animation-delay: 740ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(9) { animation-delay: 780ms; }
+  :global([data-revealed="true"]) .spec-column:nth-of-type(2) li:nth-child(10) { animation-delay: 820ms; }
+
+  @keyframes spec-line {
+    from { opacity: 0; transform: translateX(-6px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+</style>

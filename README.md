@@ -1,24 +1,39 @@
 # thefountain.ai
 
-FOUNTAIN® — the world's most beautiful AI pen. Static site.
+Fountain is an ambient AI device system — a wearable Pin and a desktop Stand that project context-aware information into the world around you.
 
-## Local preview
+This repo is the marketing / thesis site. Static, built with Astro.
+
+## Local development
 
 ```sh
 cd ~/Desktop/dev/thefountain.ai
-python3 -m http.server 8000
-# open http://localhost:8000
+npm install        # first time only
+npm run dev        # http://localhost:4321
 ```
 
-## Email signup
+`npm run build` outputs static HTML to `./dist`. `npm run preview` serves the built output locally.
 
-The signup form posts to Formspree if configured, otherwise falls back to a `mailto:j@mcginn.co` link that opens the visitor's mail client with their address pre-filled.
+## Project structure
 
-To enable Formspree (recommended for real traffic):
+```
+src/
+  assets/slides/    Source JPGs for the 5 scene cards (Astro optimizes at build)
+  components/       One file per section: Hero, Thesis, Scene, System, Beauty, Specs, Status, SignupForm, SectionNav
+  layouts/          Page.astro — HTML shell + fonts + meta
+  lib/              scenes.ts (scene data) and sections.ts (nav data)
+  pages/            index.astro — composes the 11-section card-stack
+  styles/           global.css (Tailwind import, theme tokens, card-stack mechanics)
+public/             Static assets served as-is (favicon)
+.github/workflows/  GitHub Actions: deploy on push to main
+```
 
-1. Create a free account at https://formspree.io and add a new form pointed at `j@mcginn.co`. Verify the destination email when prompted.
-2. Copy the form ID (looks like `xyzabc12`) from the form's endpoint URL `https://formspree.io/f/xyzabc12`.
-3. In `index.html`, replace `REPLACE_WITH_YOUR_FORM_ID` in the `<form action="...">` attribute with that ID.
-4. Commit and push.
+## Deployment
 
-Until step 3 is done, the form gracefully falls back to `mailto:` — the site works either way.
+Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds and publishes to GitHub Pages. Pages source must be set to **GitHub Actions** in repo Settings → Pages (not "Deploy from a branch").
+
+## Configuration
+
+- **Hero iframe** — `src/components/Hero.astro` accepts an optional `iframeUrl` prop. When unset, a dashed-border placeholder renders. Pass the URL through `index.astro` (`<Hero iframeUrl="https://my.spline.design/..." />`) when ready.
+- **Email signup** — `src/components/SignupForm.astro` posts to Formspree if `action` is set, otherwise falls back to a `mailto:j@mcginn.co`. Replace `REPLACE_WITH_YOUR_FORM_ID` in the form's `action` attribute with a real Formspree ID once configured (https://formspree.io).
+- **Pin / Stand renders** — currently dashed-border placeholders in `src/components/System.astro`. Drop in real product renders when available.

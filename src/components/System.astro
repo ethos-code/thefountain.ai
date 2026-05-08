@@ -1,0 +1,136 @@
+---
+---
+
+<div class="system">
+  <div class="system-stage">
+    <figure class="device reveal">
+      <div class="device-render" role="img" aria-label="Pin product render placeholder"></div>
+      <figcaption>Pin</figcaption>
+    </figure>
+    <figure class="device reveal">
+      <div class="device-render" role="img" aria-label="Stand product render placeholder"></div>
+      <figcaption>Stand</figcaption>
+    </figure>
+  </div>
+
+  <div class="system-copy">
+    <h2 class="reveal">Two devices. One experience.</h2>
+    <dl class="reveal">
+      <dt>Pin</dt>
+      <dd>wearable. Sees and listens close to you. Projects within reach.</dd>
+      <dt>Stand</dt>
+      <dd>for the desk, the table, the entryway. Augments the surfaces you already work and live on.</dd>
+    </dl>
+    <p class="reveal closer">
+      They share an ambient operating layer. Wherever you are, the right one
+      is with you, and what they show stays consistent.
+    </p>
+  </div>
+</div>
+
+<style>
+  .system {
+    width: 100%;
+    height: 100%;
+    background: var(--color-paper);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: clamp(48px, 8vh, 96px) clamp(24px, 6vw, 96px);
+    gap: clamp(32px, 6vh, 64px);
+  }
+  .system-stage {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(24px, 4vw, 64px);
+    align-items: end;
+    justify-items: center;
+    min-height: 0;
+  }
+  .device {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 360px;
+  }
+  .device-render {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    border: 1px dashed var(--color-hairline-strong);
+    border-radius: 4px;
+    background: linear-gradient(180deg, rgb(255 255 255 / 0.02), transparent);
+  }
+  .device figcaption {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-meta);
+  }
+  .system-copy {
+    max-width: 720px;
+  }
+  .system-copy h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 24px;
+  }
+  .system-copy dl {
+    margin: 0 0 24px;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px clamp(16px, 2vw, 24px);
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.5;
+  }
+  .system-copy dt {
+    font-weight: 500;
+    color: var(--color-ink);
+  }
+  .system-copy dd {
+    margin: 0;
+    color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+  }
+  .system-copy .closer {
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--color-ink) 88%, transparent);
+    margin: 0;
+    max-width: 60ch;
+  }
+
+  @media (max-width: 720px) {
+    .system-stage {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .system-copy dl {
+      grid-template-columns: 1fr;
+      gap: 4px 0;
+    }
+    .system-copy dd {
+      margin-bottom: 12px;
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 900ms var(--ease-out-refined),
+                transform 900ms var(--ease-out-refined);
+  }
+  :global([data-revealed="true"]) .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global([data-revealed="true"]) .device:nth-child(1) { transition-delay: 0ms; }
+  :global([data-revealed="true"]) .device:nth-child(2) { transition-delay: 120ms; }
+  :global([data-revealed="true"]) .system-copy h2 { transition-delay: 280ms; }
+  :global([data-revealed="true"]) .system-copy dl { transition-delay: 400ms; }
+  :global([data-revealed="true"]) .system-copy .closer { transition-delay: 520ms; }
+</style>

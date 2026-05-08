@@ -1,0 +1,101 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  label: string;
+  body: string;
+}
+
+const { image, alt, label, body } = Astro.props;
+---
+
+<div class="scene">
+  <Image
+    src={image}
+    alt={alt}
+    widths={[640, 1024, 1600, 2400]}
+    sizes="100vw"
+    formats={['avif', 'webp']}
+    quality={82}
+    class="scene-image"
+    loading="lazy"
+  />
+  <div class="scene-overlay" aria-hidden="true"></div>
+  <div class="scene-text">
+    <h2 class="scene-label reveal">{label}</h2>
+    <p class="scene-body reveal">{body}</p>
+  </div>
+</div>
+
+<style>
+  .scene {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--color-paper);
+  }
+  .scene-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.045);
+    transition: transform 1400ms var(--ease-out-refined);
+    will-change: transform;
+  }
+  :global([data-revealed="true"]) .scene-image {
+    transform: scale(1.0);
+  }
+  .scene-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgb(10 9 8 / 0.85) 0%, rgb(10 9 8 / 0.45) 28%, transparent 55%),
+      linear-gradient(to bottom, rgb(10 9 8 / 0.25) 0%, transparent 18%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .scene-text {
+    position: absolute;
+    left: clamp(24px, 6vw, 96px);
+    bottom: clamp(48px, 10vh, 96px);
+    right: clamp(24px, 6vw, 96px);
+    max-width: 540px;
+    z-index: 2;
+  }
+  .scene-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.022em;
+    line-height: 1.05;
+    margin: 0 0 14px;
+  }
+  .scene-body {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: clamp(15px, 1.4vw, 18px);
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--color-ink) 92%, transparent);
+    max-width: 50ch;
+    margin: 0;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 900ms var(--ease-out-refined),
+                transform 900ms var(--ease-out-refined);
+  }
+  :global([data-revealed="true"]) .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global([data-revealed="true"]) .scene-label { transition-delay: 200ms; }
+  :global([data-revealed="true"]) .scene-body { transition-delay: 340ms; }
+</style>

@@ -1,0 +1,113 @@
+---
+import SignupForm from './SignupForm.astro';
+---
+
+<div class="status">
+  <div class="status-content">
+    <h2 class="reveal">Where we are.</h2>
+    <p class="reveal">
+      Fountain is in research and prototyping. We're not selling anything.
+      We're building a thesis about what AI hardware should feel like, and
+      learning what it would take to bring it into the world.
+    </p>
+    <p class="reveal closer">
+      If that interests you, leave an email. We'll be in touch when there's
+      something to show.
+    </p>
+    <div class="form-wrap reveal">
+      <SignupForm />
+    </div>
+  </div>
+
+  <div class="status-footer">
+    <span>© 2026 Fountain</span>
+    <span class="dot" aria-hidden="true">·</span>
+    <span>A concept by <a href="mailto:j@mcginn.co">j@mcginn.co</a></span>
+    <span class="dot" aria-hidden="true">·</span>
+    <span><a href="https://mcginn.co" rel="noopener">mcginn.co</a></span>
+  </div>
+</div>
+
+<style>
+  .status {
+    width: 100%;
+    height: 100%;
+    background: var(--color-paper);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: clamp(48px, 8vh, 96px) clamp(24px, 6vw, 96px);
+    gap: clamp(24px, 4vh, 48px);
+  }
+  .status-content {
+    max-width: 600px;
+    margin: auto;
+    text-align: left;
+    width: 100%;
+  }
+  .status-content h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.4vw, 40px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 1em;
+  }
+  .status-content p {
+    font-family: var(--font-body);
+    font-size: clamp(16px, 1.5vw, 19px);
+    line-height: 1.5;
+    color: color-mix(in oklab, var(--color-ink) 90%, transparent);
+    margin: 0 0 1.4em;
+    max-width: 60ch;
+  }
+  .status-content .closer { margin-bottom: 2em; }
+  .form-wrap {
+    margin-top: 0;
+  }
+  .status-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-meta);
+    text-align: center;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-hairline);
+  }
+  .status-footer a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms ease, color 200ms ease;
+    padding-bottom: 1px;
+  }
+  .status-footer a:hover,
+  .status-footer a:focus-visible {
+    color: var(--color-ink);
+    border-bottom-color: var(--color-meta);
+    outline: none;
+  }
+  .status-footer .dot {
+    opacity: 0.5;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 900ms var(--ease-out-refined),
+                transform 900ms var(--ease-out-refined);
+  }
+  :global([data-revealed="true"]) .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  :global([data-revealed="true"]) .status-content h2 { transition-delay: 0ms; }
+  :global([data-revealed="true"]) .status-content p:nth-of-type(1) { transition-delay: 140ms; }
+  :global([data-revealed="true"]) .status-content p:nth-of-type(2) { transition-delay: 280ms; }
+  :global([data-revealed="true"]) .form-wrap { transition-delay: 440ms; }
+</style>
