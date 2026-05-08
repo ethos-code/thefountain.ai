@@ -33,12 +33,67 @@ main { display: block; }
 
 section[data-section] {
   position: relative;
+  z-index: 2;
   padding: clamp(96px, 18vh, 200px) clamp(24px, 6vw, 96px);
   overflow: hidden;
 }
 
+/* Horizontal blueprint rule at the top of each section, draws on reveal */
+section[data-section]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-hairline);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1600ms var(--ease-out-refined);
+  z-index: 3;
+}
+section[data-section][data-revealed="true"]::before {
+  transform: scaleX(1);
+}
+section[data-section]:first-of-type::before {
+  display: none;
+}
+
 section[data-section="hero"] { padding: 0; }
 section[data-section="features"] { padding-inline: clamp(16px, 4vw, 64px); }
+
+/* Page grid — subtle vertical guide lines that draw down on load */
+.page-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+}
+.page-grid-inner {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  height: 100%;
+}
+.g-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-hairline);
+  opacity: 0.6;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 2400ms var(--ease-out-refined);
+}
+body[data-grid-ready="true"] .g-line {
+  transform: scaleY(1);
+}
+.g-line:nth-child(1) { left: 25%; transition-delay: 200ms; }
+.g-line:nth-child(2) { left: 50%; transition-delay: 360ms; }
+.g-line:nth-child(3) { left: 75%; transition-delay: 520ms; }
 
 a { color: inherit; }
 
@@ -64,4 +119,6 @@ a { color: inherit; }
   }
   .reveal { opacity: 1; transform: none; }
   html, body { scroll-behavior: auto; }
+  .g-line { transform: scaleY(1); }
+  section[data-section]::before { transform: scaleX(1); }
 }

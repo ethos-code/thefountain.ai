@@ -2,31 +2,25 @@
 ---
 
 <div class="system">
-  <header class="system-header reveal">
+  <header class="reveal">
     <p class="eyebrow">The system.</p>
-    <h2>Two devices.<br>One experience.</h2>
+    <h2>One Fountain.<br>Wherever you go.</h2>
   </header>
 
-  <div class="grid">
-    <article class="device reveal">
-      <h3 class="device-name">Pin</h3>
-      <p class="device-desc">
-        Wearable. Sees and listens close to you.
-        Projects within reach.
-      </p>
-    </article>
-    <article class="device reveal">
-      <h3 class="device-name">Stand</h3>
-      <p class="device-desc">
-        For the desk, the table, the entryway.
-        Augments the surfaces you already work and live on.
-      </p>
-    </article>
+  <div class="copy">
+    <p class="reveal lead">
+      Fountain comes in two forms because the world has more than one shape.
+      A wearable Pin. A desktop Stand. Sharing one ambient operating layer
+      — the same intelligence, projected to fit the moment.
+    </p>
+    <p class="reveal">
+      Wear it. Set it down. Pick it back up. What it shows stays consistent.
+      No app to open. No mode to switch. The world is the interface.
+    </p>
   </div>
 
-  <p class="closer reveal">
-    They share an ambient operating layer. Wherever you are, the right one
-    is with you, and what they show stays consistent.
+  <p class="forms reveal" aria-label="Pin and Stand">
+    <span>Pin</span><span class="sep" aria-hidden="true">·</span><span>Stand</span>
   </p>
 </div>
 
@@ -35,8 +29,8 @@
     max-width: 1280px;
     margin: 0 auto;
   }
-  .system-header {
-    margin-bottom: clamp(64px, 10vh, 120px);
+  header {
+    margin-bottom: clamp(56px, 9vh, 96px);
     max-width: 760px;
   }
   .eyebrow {
@@ -47,7 +41,7 @@
     color: var(--color-meta);
     margin: 0 0 24px;
   }
-  .system-header h2 {
+  header h2 {
     font-family: var(--font-display);
     font-size: clamp(36px, 5vw, 64px);
     font-weight: 600;
@@ -57,57 +51,46 @@
     color: var(--color-ink);
   }
 
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(32px, 6vw, 96px);
+  .copy {
+    max-width: 720px;
     margin-bottom: clamp(56px, 8vh, 96px);
-    border-top: 1px solid var(--color-hairline);
-    padding-top: clamp(48px, 7vh, 80px);
   }
-  .device {
+  .copy p {
+    font-family: var(--font-body);
+    font-size: clamp(17px, 1.5vw, 19px);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--color-ink-muted);
+    margin: 0 0 1.4em;
+    max-width: 60ch;
+  }
+  .copy p:last-child { margin-bottom: 0; }
+  .copy .lead {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .forms {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(16px, 2.4vw, 28px);
     margin: 0;
-  }
-  .device-name {
+    padding-top: clamp(40px, 6vh, 64px);
+    border-top: 1px solid var(--color-hairline);
     font-family: var(--font-display);
-    font-size: clamp(72px, 12vw, 168px);
+    font-size: clamp(32px, 4.4vw, 56px);
     font-weight: 600;
-    letter-spacing: -0.05em;
-    line-height: 0.92;
-    margin: 0 0 28px;
+    letter-spacing: -0.04em;
+    line-height: 1;
     color: var(--color-ink);
   }
-  .device-desc {
-    font-family: var(--font-body);
-    font-size: clamp(15px, 1.3vw, 17px);
-    line-height: 1.5;
-    letter-spacing: -0.005em;
-    color: var(--color-ink-muted);
-    max-width: 32ch;
-    margin: 0;
+  .forms .sep {
+    color: var(--color-meta);
+    font-weight: 400;
   }
 
-  .closer {
-    font-family: var(--font-body);
-    font-size: clamp(15px, 1.4vw, 18px);
-    line-height: 1.5;
-    letter-spacing: -0.005em;
-    color: var(--color-ink-muted);
-    max-width: 56ch;
-    margin: 0;
-    border-top: 1px solid var(--color-hairline);
-    padding-top: clamp(32px, 5vh, 56px);
-  }
-
-  @media (max-width: 720px) {
-    .grid {
-      grid-template-columns: 1fr;
-      gap: 48px;
-    }
-  }
-
-  [data-revealed="true"] .system-header { transition-delay: 0ms; }
-  [data-revealed="true"] .device:nth-of-type(1) { transition-delay: 160ms; }
-  [data-revealed="true"] .device:nth-of-type(2) { transition-delay: 280ms; }
-  [data-revealed="true"] .closer { transition-delay: 440ms; }
+  [data-revealed="true"] header { transition-delay: 0ms; }
+  [data-revealed="true"] .copy .lead { transition-delay: 200ms; }
+  [data-revealed="true"] .copy p:nth-child(2) { transition-delay: 360ms; }
+  [data-revealed="true"] .forms { transition-delay: 540ms; }
 </style>
