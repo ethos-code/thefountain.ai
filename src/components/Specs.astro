@@ -25,7 +25,7 @@ const fineprint: string[] = [
 ---
 
 <div class="specs frame">
-  <div class="block col-1-4">
+  <div class="block col-2-3">
     <header class="reveal">
       <p class="eyebrow">Pen + Stand.</p>
       <h2>The numbers we're<br>aiming at.</h2>
@@ -150,9 +150,9 @@ const fineprint: string[] = [
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: clamp(40px, 6vh, 64px) clamp(40px, 6vw, 96px);
+    gap: clamp(36px, 5vh, 56px) clamp(28px, 3.5vw, 56px);
     border-top: 1px solid var(--color-hairline);
-    padding-top: clamp(40px, 6vh, 64px);
+    padding-top: clamp(36px, 5vh, 56px);
   }
   .callouts li {
     display: flex;
@@ -163,9 +163,9 @@ const fineprint: string[] = [
   .big {
     display: flex;
     align-items: baseline;
-    gap: clamp(8px, 1vw, 14px);
+    gap: clamp(6px, 0.8vw, 12px);
     font-family: var(--font-mono);
-    font-size: clamp(48px, 7.5vw, 96px);
+    font-size: clamp(40px, 5.6vw, 72px);
     font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1;
@@ -214,8 +214,8 @@ const fineprint: string[] = [
     margin: 0 0 clamp(40px, 6vh, 64px);
     padding: 0;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px clamp(24px, 4vw, 48px);
+    grid-template-columns: 1fr;
+    gap: 8px;
     padding-top: clamp(32px, 5vh, 48px);
     border-top: 1px solid var(--color-hairline);
   }
@@ -240,8 +240,7 @@ const fineprint: string[] = [
   }
 
   @media (max-width: 720px) {
-    .callouts { grid-template-columns: 1fr; gap: 40px; }
-    .fineprint { grid-template-columns: 1fr; }
+    .callouts { grid-template-columns: 1fr; gap: 32px; }
   }
 
   [data-revealed="true"] header { transition-delay: 0ms; }

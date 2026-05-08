@@ -1,62 +1,17 @@
 ---
-interface Props {
-  iframeUrl?: string;
-}
-const { iframeUrl } = Astro.props;
+/* Hero is now an empty 100vh spacer. The Spline iframe lives in
+   PenStage (rendered globally in Page.astro) and morphs from
+   full-bleed at scroll=0 to a fixed right-column floater as the
+   user scrolls past this section. */
 ---
 
-<div class="hero">
-  <div class="hero-stage">
-    {iframeUrl ? (
-      <iframe
-        src={iframeUrl}
-        title="Fountain — interactive 3D turntable"
-        allow="autoplay; fullscreen; xr-spatial-tracking"
-        loading="eager"
-      ></iframe>
-    ) : (
-      <div class="hero-placeholder" role="img" aria-label="Hero turntable iframe goes here">
-        <span>Hero turntable iframe goes here</span>
-      </div>
-    )}
-  </div>
-</div>
+<div class="hero" aria-hidden="true"></div>
 
 <style>
   .hero {
-    position: relative;
     width: 100%;
     height: 100vh;
     height: 100dvh;
     background: var(--color-paper);
-    overflow: hidden;
-  }
-  .hero-stage {
-    position: absolute;
-    inset: 0;
-  }
-  .hero-stage iframe,
-  .hero-placeholder {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-    background: transparent;
-  }
-  .hero-stage iframe {
-    /* Iframe captures wheel events; pointer-events: none lets page scroll
-       through naturally. Spline scenes auto-orbit on their own. */
-    pointer-events: none;
-  }
-  .hero-placeholder {
-    border: 1px dashed var(--color-hairline-strong);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-meta);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
   }
 </style>

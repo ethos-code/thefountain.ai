@@ -1,0 +1,103 @@
+---
+const SPLINE_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1KqRUQ/';
+---
+
+<div class="pen-stage" data-pen-stage>
+  <iframe
+    src={SPLINE_URL}
+    title="Fountain — interactive 3D pen"
+    allow="autoplay; fullscreen; xr-spatial-tracking"
+    loading="eager"
+    aria-hidden="true"
+  ></iframe>
+</div>
+
+<script is:inline>
+  (() => {
+    const stage = document.querySelector('[data-pen-stage]');
+    if (!stage) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return;
+
+    let ticking = false;
+
+    const update = () => {
+      const scrollY = window.scrollY;
+      const heroEnd = window.innerHeight;
+      // 0 = hero (full-bleed), 1 = floating right
+      const t = Math.max(0, Math.min(1, scrollY / heroEnd));
+      const eased = 1 - Math.pow(1 - t, 2.2);
+
+      const width = 100 - 75 * eased;   // 100vw → 25vw (sits in col-4)
+      const height = 100 - 30 * eased;  // 100vh → 70vh
+      const top = (100 - height) / 2;   // 0 → 15vh
+
+      stage.style.setProperty('--w', `${width}vw`);
+      stage.style.setProperty('--h', `${height}vh`);
+      stage.style.setProperty('--top', `${top}vh`);
+
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => requestAnimationFrame(update));
+
+    // Fade out as Status enters view, fade back in if user scrolls up.
+    const status = document.querySelector('[data-section="status"]');
+    if (status && 'IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const fading = entry.isIntersecting && entry.intersectionRatio > 0.35;
+            stage.setAttribute('data-fade', fading ? 'true' : 'false');
+          });
+        },
+        { threshold: [0, 0.2, 0.35, 0.5, 0.7] }
+      );
+      obs.observe(status);
+    }
+  })();
+</script>
+
+<style>
+  .pen-stage {
+    position: fixed;
+    top: var(--top, 0);
+    right: 0;
+    width: var(--w, 100vw);
+    height: var(--h, 100vh);
+    pointer-events: none;
+    z-index: 4;
+    transition: opacity 800ms var(--ease-out-refined);
+  }
+  .pen-stage[data-fade="true"] {
+    opacity: 0;
+  }
+  .pen-stage iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .pen-stage { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pen-stage {
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+    }
+  }
+</style>
