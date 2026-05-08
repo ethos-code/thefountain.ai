@@ -1,0 +1,290 @@
+---
+import { Image } from 'astro:assets';
+import { scenes } from '../lib/scenes';
+
+const DURATION_MS = 6000;
+---
+
+<div class="carousel" data-carousel data-duration={DURATION_MS}>
+  <div class="stage">
+    {scenes.map((scene, i) => (
+      <div class="slide" data-index={i} data-active={i === 0 ? 'true' : 'false'}>
+        <Image
+          src={scene.image}
+          alt={scene.alt}
+          widths={[640, 1024, 1600, 2400]}
+          sizes="(max-width: 768px) 100vw, 92vw"
+          formats={['avif', 'webp']}
+          quality={82}
+          class="slide-image"
+          loading={i === 0 ? 'eager' : 'lazy'}
+        />
+        <div class="slide-overlay" aria-hidden="true"></div>
+        <div class="slide-text">
+          <h2 class="slide-label">{scene.label}</h2>
+          <p class="slide-body">{scene.body}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="controls" role="tablist" aria-label="Feature carousel">
+    {scenes.map((scene, i) => (
+      <button
+        type="button"
+        class="dot"
+        role="tab"
+        data-index={i}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-label={`Show: ${scene.label}`}
+        data-active={i === 0 ? 'true' : 'false'}
+      >
+        <span class="dot-track"><span class="dot-fill"></span></span>
+        <span class="dot-label">{scene.label}</span>
+      </button>
+    ))}
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const carousel = document.querySelector('[data-carousel]');
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.slide');
+    const dots = carousel.querySelectorAll('.dot');
+    const total = slides.length;
+    const duration = parseInt(carousel.getAttribute('data-duration') || '6000', 10);
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let current = 0;
+    let timer = null;
+    let paused = false;
+    let inView = false;
+
+    const go = (next) => {
+      slides.forEach((s, i) => s.setAttribute('data-active', i === next ? 'true' : 'false'));
+      dots.forEach((d, i) => {
+        d.setAttribute('data-active', i === next ? 'true' : 'false');
+        d.setAttribute('aria-selected', i === next ? 'true' : 'false');
+      });
+      current = next;
+    };
+
+    const advance = () => go((current + 1) % total);
+
+    const stop = () => {
+      if (timer) clearTimeout(timer);
+      timer = null;
+    };
+
+    const start = () => {
+      if (reduceMotion || paused || !inView) return;
+      stop();
+      timer = setTimeout(() => {
+        advance();
+        start();
+      }, duration);
+    };
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const i = parseInt(dot.getAttribute('data-index') || '0', 10);
+        go(i);
+        start();
+      });
+    });
+
+    const pauseOn = () => { paused = true; stop(); };
+    const pauseOff = () => { paused = false; start(); };
+    carousel.addEventListener('mouseenter', pauseOn);
+    carousel.addEventListener('mouseleave', pauseOff);
+    carousel.addEventListener('focusin', pauseOn);
+    carousel.addEventListener('focusout', pauseOff);
+
+    document.addEventListener('keydown', (e) => {
+      if (!carousel.matches(':hover, :focus-within')) return;
+      if (e.key === 'ArrowRight') { advance(); start(); }
+      if (e.key === 'ArrowLeft')  { go((current - 1 + total) % total); start(); }
+    });
+
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            inView = entry.isIntersecting;
+            if (inView) start(); else stop();
+          });
+        },
+        { threshold: 0.35 }
+      );
+      obs.observe(carousel);
+    } else {
+      inView = true;
+      start();
+    }
+  })();
+</script>
+
+<style>
+  .carousel {
+    position: relative;
+    width: 100%;
+    height: clamp(420px, 76vh, 800px);
+    overflow: hidden;
+    background: var(--color-paper);
+    border-radius: 4px;
+    isolation: isolate;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1100ms var(--ease-out-refined);
+    pointer-events: none;
+  }
+  .slide[data-active="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slide-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 9000ms linear;
+    will-change: transform;
+  }
+  .slide[data-active="true"] .slide-image {
+    transform: scale(1.06);
+  }
+
+  .slide-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgb(10 9 8 / 0.82) 0%, rgb(10 9 8 / 0.42) 32%, transparent 60%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide-text {
+    position: absolute;
+    bottom: clamp(56px, 10vh, 120px);
+    left: clamp(28px, 5vw, 80px);
+    right: clamp(28px, 5vw, 80px);
+    max-width: 600px;
+    z-index: 2;
+  }
+  .slide-label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(36px, 5.4vw, 72px);
+    letter-spacing: -0.038em;
+    line-height: 0.98;
+    margin: 0 0 16px;
+  }
+  .slide-body {
+    font-family: var(--font-body);
+    font-size: clamp(15px, 1.4vw, 18px);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--color-ink-muted);
+    max-width: 50ch;
+    margin: 0;
+  }
+
+  .controls {
+    position: absolute;
+    bottom: clamp(16px, 2.4vh, 28px);
+    left: clamp(28px, 5vw, 80px);
+    right: clamp(28px, 5vw, 80px);
+    display: flex;
+    gap: clamp(8px, 1.2vw, 20px);
+    z-index: 3;
+  }
+  .dot {
+    background: transparent;
+    border: 0;
+    color: var(--color-ink);
+    cursor: pointer;
+    padding: 8px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    flex: 1;
+    text-align: left;
+  }
+  .dot:focus-visible {
+    outline: 1px dashed var(--color-ink);
+    outline-offset: 6px;
+  }
+  .dot-track {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-hairline-strong);
+    overflow: hidden;
+    border-radius: 1px;
+  }
+  .dot-fill {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--color-ink);
+  }
+  .dot[data-active="true"] .dot-fill {
+    animation: dot-progress 6000ms linear forwards;
+  }
+  @keyframes dot-progress {
+    from { width: 0; }
+    to   { width: 100%; }
+  }
+  .dot-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-meta);
+    transition: color 240ms var(--ease-out-refined);
+  }
+  .dot[data-active="true"] .dot-label,
+  .dot:hover .dot-label {
+    color: var(--color-ink);
+  }
+
+  @media (max-width: 720px) {
+    .dot-label { display: none; }
+    .controls {
+      gap: 6px;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+    }
+    .slide-text {
+      bottom: 56px;
+      left: 20px;
+      right: 20px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot[data-active="true"] .dot-fill { animation: none; width: 100%; }
+    .slide[data-active="true"] .slide-image { transform: scale(1); }
+    .slide-image { transition: none; }
+    .slide { transition: opacity 1ms; }
+  }
+</style>

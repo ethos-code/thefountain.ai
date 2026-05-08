@@ -2,15 +2,15 @@
 
 @theme {
   --color-paper: #0A0908;
-  --color-ink: #FAFAF7;
-  --color-meta: #7A7672;
-  --color-hairline: rgb(255 255 255 / 0.06);
-  --color-hairline-strong: rgb(255 255 255 / 0.12);
+  --color-ink: #F5F5F2;
+  --color-ink-muted: #B5B3AF;
+  --color-meta: #6E6B66;
+  --color-hairline: rgb(255 255 255 / 0.08);
+  --color-hairline-strong: rgb(255 255 255 / 0.16);
   --color-error: #FF7D6E;
 
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', system-ui, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
-  --font-serif: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --ease-out-refined: cubic-bezier(0.22, 1, 0.36, 1);
@@ -25,39 +25,34 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
   overscroll-behavior: none;
+  scroll-behavior: smooth;
 }
+body { margin: 0; }
 
-body {
-  margin: 0;
-}
+main { display: block; }
 
-/* Card-stack mechanism */
-main.stack {
+section[data-section] {
   position: relative;
-}
-.stack-card {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  height: 100dvh;
-}
-.stack-card .card-host {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background: var(--color-paper);
-  border-top: 1px solid var(--color-hairline);
-  box-shadow: 0 -16px 36px rgb(0 0 0 / 0.42);
-  isolation: isolate;
-}
-.stack-card:first-of-type .card-host {
-  border-top: 0;
-  box-shadow: none;
+  padding: clamp(96px, 18vh, 200px) clamp(24px, 6vw, 96px);
+  overflow: hidden;
 }
 
-a {
-  color: inherit;
+section[data-section="hero"] { padding: 0; }
+section[data-section="features"] { padding-inline: clamp(16px, 4vw, 64px); }
+
+a { color: inherit; }
+
+/* Universal reveal pattern */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 900ms var(--ease-out-refined),
+    transform 900ms var(--ease-out-refined);
+}
+[data-revealed="true"] .reveal {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -67,7 +62,6 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .stack-card {
-    position: relative;
-  }
+  .reveal { opacity: 1; transform: none; }
+  html, body { scroll-behavior: auto; }
 }
