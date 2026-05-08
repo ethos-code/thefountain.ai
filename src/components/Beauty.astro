@@ -1,39 +1,31 @@
 ---
 ---
 
-<div class="beauty">
-  <header class="reveal">
-    <p class="eyebrow">Why beauty.</p>
-    <h2>Why we made<br>it beautiful.</h2>
-  </header>
-  <div class="copy">
-    <p class="reveal">
-      Most AI hardware is a black plastic puck. It works, but it doesn't belong.
-    </p>
-    <p class="reveal">
-      AI lives close to us — on our bodies, on our desks, in the homes of the
-      people we love. It deserves the same care we give the things we already
-      keep around us. A wedding ring. A reading lamp. A favorite coat.
-    </p>
-    <p class="reveal closer">
-      So we made Fountain something you would choose, not just tolerate.
-      The materials, the weight, the finish. The thinking shows.
-    </p>
+<div class="beauty frame">
+  <div class="block col-1-3">
+    <header class="reveal">
+      <p class="eyebrow">Why beauty.</p>
+      <h2>Why we made<br>it beautiful.</h2>
+    </header>
+
+    <div class="copy">
+      <p class="reveal">
+        Most AI hardware is a black plastic puck. It works, but it doesn't belong.
+      </p>
+      <p class="reveal">
+        AI lives close to us — on our bodies, on our desks, in the homes of the
+        people we love. It deserves the same care we give the things we already
+        keep around us. A wedding ring. A reading lamp. A favorite coat.
+      </p>
+      <p class="reveal closer">
+        So we made Fountain something you would choose, not just tolerate.
+        The materials, the weight, the finish. The thinking shows.
+      </p>
+    </div>
   </div>
 </div>
 
 <style>
-  .beauty {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(32px, 6vw, 96px);
-    align-items: start;
-  }
-  header {
-    max-width: 480px;
-  }
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -48,12 +40,8 @@
     font-weight: 600;
     letter-spacing: -0.038em;
     line-height: 0.98;
-    margin: 0;
+    margin: 0 0 clamp(40px, 6vh, 56px);
     color: var(--color-ink);
-  }
-
-  .copy {
-    max-width: 520px;
   }
   .copy p {
     font-family: var(--font-body);
@@ -68,13 +56,6 @@
   .copy .closer {
     color: var(--color-ink);
     font-weight: 500;
-  }
-
-  @media (max-width: 900px) {
-    .beauty {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
   }
 
   [data-revealed="true"] header { transition-delay: 0ms; }

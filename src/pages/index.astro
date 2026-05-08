@@ -7,7 +7,6 @@ import System from '../components/System.astro';
 import Beauty from '../components/Beauty.astro';
 import Specs from '../components/Specs.astro';
 import Status from '../components/Status.astro';
-import SectionNav from '../components/SectionNav.astro';
 import { sections } from '../lib/sections';
 
 const labelOf = (id: string) => sections.find((s) => s.id === id)?.label ?? '';
@@ -16,8 +15,6 @@ const SPLINE_HERO_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5
 ---
 
 <Page>
-  <SectionNav />
-
   <main>
     <section id="hero" data-section="hero" data-section-label={labelOf('hero')}>
       <Hero iframeUrl={SPLINE_HERO_URL} />

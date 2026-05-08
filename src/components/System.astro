@@ -1,38 +1,32 @@
 ---
 ---
 
-<div class="system">
-  <header class="reveal">
-    <p class="eyebrow">The system.</p>
-    <h2>One Fountain.<br>Wherever you go.</h2>
-  </header>
+<div class="system frame">
+  <div class="block col-1-3">
+    <header class="reveal">
+      <p class="eyebrow">The system.</p>
+      <h2>One Fountain.<br>Wherever you go.</h2>
+    </header>
 
-  <div class="copy">
-    <p class="reveal lead">
-      Fountain comes in two forms because the world has more than one shape.
-      A wearable Pin. A desktop Stand. Sharing one ambient operating layer
-      — the same intelligence, projected to fit the moment.
-    </p>
-    <p class="reveal">
-      Wear it. Set it down. Pick it back up. What it shows stays consistent.
-      No app to open. No mode to switch. The world is the interface.
+    <div class="copy">
+      <p class="reveal lead">
+        Fountain comes in two forms because the world has more than one shape.
+        A wearable Pen. A desktop Stand. Sharing one ambient operating layer
+        — the same intelligence, projected to fit the moment.
+      </p>
+      <p class="reveal">
+        Wear it. Set it down. Pick it back up. What it shows stays consistent.
+        No app to open. No mode to switch. The world is the interface.
+      </p>
+    </div>
+
+    <p class="forms reveal" aria-label="Pen and Stand">
+      <span>Pen</span><span class="sep" aria-hidden="true">·</span><span>Stand</span>
     </p>
   </div>
-
-  <p class="forms reveal" aria-label="Pin and Stand">
-    <span>Pin</span><span class="sep" aria-hidden="true">·</span><span>Stand</span>
-  </p>
 </div>
 
 <style>
-  .system {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-  header {
-    margin-bottom: clamp(56px, 9vh, 96px);
-    max-width: 760px;
-  }
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -47,18 +41,16 @@
     font-weight: 600;
     letter-spacing: -0.038em;
     line-height: 0.98;
-    margin: 0;
+    margin: 0 0 clamp(40px, 6vh, 64px);
     color: var(--color-ink);
   }
-
   .copy {
-    max-width: 720px;
-    margin-bottom: clamp(56px, 8vh, 96px);
+    margin-bottom: clamp(40px, 6vh, 64px);
   }
   .copy p {
     font-family: var(--font-body);
-    font-size: clamp(17px, 1.5vw, 19px);
-    line-height: 1.5;
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.55;
     letter-spacing: -0.005em;
     color: var(--color-ink-muted);
     margin: 0 0 1.4em;
@@ -75,7 +67,7 @@
     align-items: baseline;
     gap: clamp(16px, 2.4vw, 28px);
     margin: 0;
-    padding-top: clamp(40px, 6vh, 64px);
+    padding-top: clamp(32px, 5vh, 48px);
     border-top: 1px solid var(--color-hairline);
     font-family: var(--font-display);
     font-size: clamp(32px, 4.4vw, 56px);
