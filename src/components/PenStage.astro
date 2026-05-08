@@ -1,5 +1,28 @@
 ---
 const SPLINE_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1KqRUQ/';
+
+/* Note on transparency:
+   Spline iframes serve a complete viewer page with the scene data inlined
+   (the splinecode is bundled into the HTML, not exposed as a separate URL).
+   That means the iframe's background is whatever the scene was published
+   with — CSS `background: transparent` on the iframe element doesn't strip
+   pixels rendered inside it.
+
+   Two ways to get a transparent background:
+
+   1. Re-publish the scene from Spline editor with ALL of these set:
+      - Scene → Background → set color alpha to 0 (transparent)
+      - No solid background plane/cube object in the scene
+      - HDRI environment: keep for lighting, but disable its "Background"
+        visibility so the skybox doesn't render
+      - Camera: no override background
+
+   2. Or switch to <spline-viewer> web component (preferred):
+      - In Spline: File → Export → Code Export → Web Component
+      - Copy the .splinecode URL it generates
+      - Share that URL — we'll swap iframe for <spline-viewer> which
+        renders to a transparent <canvas>
+*/
 ---
 
 <div class="pen-stage" data-pen-stage>
@@ -26,13 +49,12 @@ const SPLINE_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1Kq
     const update = () => {
       const scrollY = window.scrollY;
       const heroEnd = window.innerHeight;
-      // 0 = hero (full-bleed), 1 = floating right
       const t = Math.max(0, Math.min(1, scrollY / heroEnd));
       const eased = 1 - Math.pow(1 - t, 2.2);
 
-      const width = 100 - 75 * eased;   // 100vw → 25vw (sits in col-4)
-      const height = 100 - 30 * eased;  // 100vh → 70vh
-      const top = (100 - height) / 2;   // 0 → 15vh
+      const width = 100 - 75 * eased;
+      const height = 100 - 30 * eased;
+      const top = (100 - height) / 2;
 
       stage.style.setProperty('--w', `${width}vw`);
       stage.style.setProperty('--h', `${height}vh`);
@@ -51,7 +73,6 @@ const SPLINE_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1Kq
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', () => requestAnimationFrame(update));
 
-    // Fade out as Status enters view, fade back in if user scrolls up.
     const status = document.querySelector('[data-section="status"]');
     if (status && 'IntersectionObserver' in window) {
       const obs = new IntersectionObserver(
