@@ -1,0 +1,200 @@
+---
+import { sections } from '../lib/sections';
+---
+
+<header class="header">
+  <button
+    type="button"
+    class="brand"
+    data-menu-trigger
+    aria-label="Open navigation menu"
+    aria-controls="menu-sheet"
+    aria-expanded="false"
+  >
+    FOUNTAIN
+  </button>
+
+  <div class="menu-sheet" id="menu-sheet" data-menu-sheet hidden>
+    <button type="button" class="menu-close" data-menu-close aria-label="Close menu">
+      <span aria-hidden="true">×</span>
+    </button>
+    <div class="menu-inner">
+      <ul>
+        {sections.map((s, i) => (
+          <li>
+            <a href={`#${s.id}`} data-target={s.id}>
+              <span class="idx">{String(i + 1).padStart(2, '0')}</span>
+              <span class="lbl">{s.label}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script is:inline>
+  (() => {
+    const trigger = document.querySelector('[data-menu-trigger]');
+    const sheet = document.querySelector('[data-menu-sheet]');
+    const closeBtn = document.querySelector('[data-menu-close]');
+    if (!trigger || !sheet) return;
+
+    const open = () => {
+      sheet.hidden = false;
+      requestAnimationFrame(() => sheet.setAttribute('data-open', 'true'));
+      trigger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      sheet.removeAttribute('data-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      setTimeout(() => { sheet.hidden = true; }, 280);
+    };
+
+    trigger.addEventListener('click', () => {
+      if (sheet.hasAttribute('data-open')) close();
+      else open();
+    });
+    closeBtn?.addEventListener('click', close);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sheet.hasAttribute('data-open')) close();
+    });
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    sheet.querySelectorAll('a[data-target]').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('data-target');
+        if (!id) return;
+        const el = document.getElementById(id);
+        if (!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+        history.replaceState(null, '', `#${id}`);
+        setTimeout(close, 220);
+      });
+    });
+  })();
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .brand {
+    pointer-events: auto;
+    position: fixed;
+    top: clamp(20px, 4vh, 36px);
+    left: clamp(24px, 6vw, 96px);
+    z-index: 110;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    color: #FFFFFF;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    line-height: 1;
+    cursor: pointer;
+    mix-blend-mode: difference;
+    transition: opacity 200ms ease, letter-spacing 240ms var(--ease-out-refined);
+  }
+  .brand:hover {
+    letter-spacing: 0.01em;
+  }
+  .brand:focus-visible {
+    outline: 1px dashed currentColor;
+    outline-offset: 6px;
+  }
+
+  .menu-sheet {
+    position: fixed;
+    inset: 0;
+    background: rgb(10 9 8 / 0.96);
+    backdrop-filter: blur(24px) saturate(1.1);
+    -webkit-backdrop-filter: blur(24px) saturate(1.1);
+    z-index: 105;
+    opacity: 0;
+    transition: opacity 280ms var(--ease-out-refined);
+    pointer-events: auto;
+    overflow-y: auto;
+  }
+  .menu-sheet[data-open="true"] {
+    opacity: 1;
+  }
+
+  .menu-inner {
+    max-width: var(--frame-max);
+    margin: 0 auto;
+    padding: clamp(120px, 18vh, 200px) clamp(24px, 6vw, 96px) clamp(48px, 8vh, 96px);
+  }
+  .menu-inner ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .menu-inner li {
+    border-top: 1px solid var(--color-hairline);
+  }
+  .menu-inner li:last-child {
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .menu-inner a {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(20px, 3vw, 36px);
+    padding: clamp(20px, 3vh, 32px) 0;
+    color: var(--color-ink);
+    text-decoration: none;
+    transition: padding-left 280ms var(--ease-out-refined);
+  }
+  .menu-inner a:hover,
+  .menu-inner a:focus-visible {
+    padding-left: 12px;
+    outline: none;
+  }
+  .menu-inner .idx {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--color-meta);
+    min-width: 32px;
+  }
+  .menu-inner .lbl {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.4vw, 56px);
+    font-weight: 600;
+    letter-spacing: -0.034em;
+    line-height: 1.05;
+  }
+
+  .menu-close {
+    position: fixed;
+    top: clamp(20px, 4vh, 36px);
+    right: clamp(24px, 6vw, 96px);
+    z-index: 111;
+    background: transparent;
+    border: 0;
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-size: 36px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

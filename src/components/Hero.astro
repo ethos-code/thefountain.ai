@@ -6,10 +6,6 @@ const { iframeUrl } = Astro.props;
 ---
 
 <div class="hero">
-  <div class="hero-meta">
-    <div class="wordmark">Fountain</div>
-    <div class="status-mark">Concept · 2026</div>
-  </div>
   <div class="hero-stage">
     {iframeUrl ? (
       <iframe
@@ -35,40 +31,9 @@ const { iframeUrl } = Astro.props;
     background: var(--color-paper);
     overflow: hidden;
   }
-  .hero-meta {
-    position: absolute;
-    top: clamp(20px, 4vh, 36px);
-    left: clamp(24px, 6vw, 96px);
-    right: clamp(24px, 6vw, 96px);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    z-index: 2;
-    pointer-events: none;
-  }
-  .wordmark {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: -0.005em;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-  .status-mark {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-meta);
-    text-align: right;
-    line-height: 1;
-  }
   .hero-stage {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .hero-stage iframe,
   .hero-placeholder {
@@ -78,12 +43,9 @@ const { iframeUrl } = Astro.props;
     display: block;
     background: transparent;
   }
-  /* Spline iframes capture wheel events for camera zoom, which traps page
-     scroll. Disable pointer events so wheel/scroll passes through. The
-     scene's own auto-rotation/animation still plays — visitors lose drag
-     orbit but get clean page scrolling. To restore interactivity, switch
-     to a click-to-engage overlay pattern. */
   .hero-stage iframe {
+    /* Iframe captures wheel events; pointer-events: none lets page scroll
+       through naturally. Spline scenes auto-orbit on their own. */
     pointer-events: none;
   }
   .hero-placeholder {

@@ -1,89 +1,66 @@
 ---
-interface Callout { value: string; unit: string; caption: string; }
+interface Callout {
+  pen: string;
+  stand: string;
+  unit: string;
+  caption: string;
+}
 
-const pinCallouts: Callout[] = [
-  { value: '50',  unit: 'TOPS',     caption: 'on-device neural engine' },
-  { value: '16',  unit: 'GB',       caption: 'unified memory' },
-  { value: '30',  unit: 'ANSI lm',  caption: 'pico-projection' },
-  { value: '14',  unit: 'hr',       caption: 'active use' },
+const callouts: Callout[] = [
+  { pen: '50',  stand: '200', unit: 'TOPS',     caption: 'on-device neural engine' },
+  { pen: '16',  stand: '32',  unit: 'GB',       caption: 'unified memory' },
+  { pen: '30',  stand: '80',  unit: 'ANSI lm',  caption: 'pico-projection' },
+  { pen: '4',   stand: '12',  unit: 'B params', caption: 'on-device foundation model' },
 ];
 
-const standCallouts: Callout[] = [
-  { value: '200', unit: 'TOPS',     caption: 'on-device neural engine' },
-  { value: '32',  unit: 'GB',       caption: 'unified memory' },
-  { value: '80',  unit: 'ANSI lm',  caption: 'pico-projection' },
-  { value: '1',   unit: 'TB',       caption: 'on-device storage' },
-];
-
-const pinFineprint = [
-  '4 MP RGB-D camera with depth sensor',
-  '3-mic beamforming array · spatial audio capture',
-  '≤ 4B parameter on-device foundation model',
-  'Wi-Fi 7 · Bluetooth 6 · UWB precision positioning',
-  '256 GB on-device storage',
-  'Magnetic wireless charging',
-  'Machined aluminum body · sapphire crystal lens',
-  '18 g · IP54 water and dust rated',
-];
-
-const standFineprint = [
-  '8 MP RGB-D camera · LiDAR scanner',
-  '6-mic beamforming array · spatial audio capture and playback',
-  '≤ 12B parameter on-device foundation model',
-  'Wi-Fi 7 · Thread · Matter · UWB · Bluetooth 6',
-  'USB-C power · wireless charging puck for the Pin',
-  'Anodized aluminum body · optical-grade glass aperture',
-  '14 cm tall · 4 cm diameter',
+const fineprint: string[] = [
+  '4 – 8 MP RGB-D camera (Stand also has LiDAR)',
+  '3 – 6 mic beamforming array, spatial audio',
+  '256 GB – 1 TB on-device storage',
+  'Wi-Fi 7 · Bluetooth 6 · UWB · Thread · Matter',
+  'Magnetic wireless charging (Pen) · USB-C with charging puck (Stand)',
+  'Machined / anodized aluminum · sapphire crystal lens / optical-grade glass',
+  '18 g · IP54 (Pen) · 14 × 4 cm (Stand)',
 ];
 ---
 
-<div class="specs">
-  <header class="reveal">
-    <p class="eyebrow">An imagined spec.</p>
-    <h2>The numbers we're<br>aiming at.</h2>
-    <p class="lede">
-      We're not building hardware yet. These are the targets we'd aim at —
-      what the technology of the next few years could make possible.
+<div class="specs frame">
+  <div class="block col-1-4">
+    <header class="reveal">
+      <p class="eyebrow">Pen + Stand.</p>
+      <h2>The numbers we're<br>aiming at.</h2>
+      <p class="lede">
+        We're not building hardware yet. These are the targets we'd aim at —
+        what the technology of the next few years could make possible.
+      </p>
+    </header>
+
+    <ul class="callouts reveal">
+      {callouts.map(({ pen, stand, unit, caption }) => (
+        <li>
+          <span class="big">
+            <span class="big-num" data-count={pen}>{pen}</span>
+            <span class="big-sep" aria-hidden="true">/</span>
+            <span class="big-num" data-count={stand}>{stand}</span>
+          </span>
+          <span class="unit">{unit}</span>
+          <span class="caption">{caption}</span>
+        </li>
+      ))}
+    </ul>
+
+    <p class="legend reveal" aria-hidden="true">Pen / Stand</p>
+
+    <ul class="fineprint reveal">
+      {fineprint.map((line) => <li>{line}</li>)}
+    </ul>
+
+    <p class="philosophy reveal">
+      Privacy-first. All sensitive inference happens on-device. End-to-end
+      encrypted sync between Pen and Stand. No data leaves the device without
+      explicit consent. Local-first by design.
     </p>
-  </header>
-
-  <section class="device-block reveal" aria-labelledby="pin-spec">
-    <h3 id="pin-spec" class="device-spec-name">Pin</h3>
-    <ul class="callouts">
-      {pinCallouts.map(({ value, unit, caption }) => (
-        <li>
-          <span class="big" data-count={value}>{value}</span>
-          <span class="unit">{unit}</span>
-          <span class="caption">{caption}</span>
-        </li>
-      ))}
-    </ul>
-    <ul class="fineprint">
-      {pinFineprint.map((line) => <li>{line}</li>)}
-    </ul>
-  </section>
-
-  <section class="device-block reveal" aria-labelledby="stand-spec">
-    <h3 id="stand-spec" class="device-spec-name">Stand</h3>
-    <ul class="callouts">
-      {standCallouts.map(({ value, unit, caption }) => (
-        <li>
-          <span class="big" data-count={value}>{value}</span>
-          <span class="unit">{unit}</span>
-          <span class="caption">{caption}</span>
-        </li>
-      ))}
-    </ul>
-    <ul class="fineprint">
-      {standFineprint.map((line) => <li>{line}</li>)}
-    </ul>
-  </section>
-
-  <p class="philosophy reveal">
-    Privacy-first. All sensitive inference happens on-device. End-to-end
-    encrypted sync between Pin and Stand. No data leaves the device without
-    explicit consent. Local-first by design.
-  </p>
+  </div>
 </div>
 
 <script is:inline>
@@ -96,16 +73,13 @@ const standFineprint = [
     const animate = (el) => {
       const target = parseInt(el.getAttribute('data-count') || '0', 10);
       if (Number.isNaN(target)) return;
-
       if (reduceMotion) {
         el.textContent = String(target);
         return;
       }
-
       el.textContent = '0';
       const duration = 1400;
       const start = performance.now();
-
       const tick = (now) => {
         const t = Math.min((now - start) / duration, 1);
         const eased = 1 - Math.pow(1 - t, 3);
@@ -138,13 +112,10 @@ const standFineprint = [
 
 <style>
   .specs {
-    max-width: 1280px;
-    margin: 0 auto;
     font-family: var(--font-mono);
   }
   header {
-    max-width: 720px;
-    margin-bottom: clamp(64px, 10vh, 120px);
+    margin-bottom: clamp(56px, 9vh, 96px);
   }
   .eyebrow {
     font-family: var(--font-mono);
@@ -173,36 +144,26 @@ const standFineprint = [
     max-width: 56ch;
   }
 
-  .device-block {
-    margin-bottom: clamp(56px, 9vh, 96px);
-    padding-top: clamp(40px, 6vh, 64px);
-    border-top: 1px solid var(--color-hairline);
-  }
-  .device-spec-name {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 3.4vw, 40px);
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1;
-    margin: 0 0 clamp(40px, 6vh, 64px);
-    color: var(--color-ink);
-  }
-
   .callouts {
     list-style: none;
-    margin: 0 0 clamp(40px, 6vh, 64px);
+    margin: 0 0 16px;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: clamp(24px, 3vw, 56px);
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(40px, 6vh, 64px) clamp(40px, 6vw, 96px);
+    border-top: 1px solid var(--color-hairline);
+    padding-top: clamp(40px, 6vh, 64px);
   }
   .callouts li {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: 6px;
   }
   .big {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(8px, 1vw, 14px);
     font-family: var(--font-mono);
     font-size: clamp(48px, 7.5vw, 96px);
     font-weight: 400;
@@ -210,6 +171,15 @@ const standFineprint = [
     line-height: 1;
     color: var(--color-ink);
     font-variant-numeric: tabular-nums;
+  }
+  .big-num {
+    display: inline-block;
+    text-align: right;
+    min-width: 1.6ch;
+  }
+  .big-sep {
+    color: var(--color-meta);
+    font-weight: 400;
   }
   .unit {
     font-family: var(--font-mono);
@@ -226,17 +196,28 @@ const standFineprint = [
     color: var(--color-ink-muted);
     letter-spacing: 0;
     text-transform: none;
-    margin-top: 12px;
-    max-width: 16ch;
+    margin-top: 10px;
+    max-width: 22ch;
+  }
+
+  .legend {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-meta);
+    margin: 0 0 clamp(40px, 6vh, 64px);
   }
 
   .fineprint {
     list-style: none;
-    margin: 0;
+    margin: 0 0 clamp(40px, 6vh, 64px);
     padding: 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8px clamp(24px, 4vw, 48px);
+    padding-top: clamp(32px, 5vh, 48px);
+    border-top: 1px solid var(--color-hairline);
   }
   .fineprint li {
     font-family: var(--font-mono);
@@ -253,21 +234,19 @@ const standFineprint = [
     color: var(--color-meta);
     max-width: 70ch;
     margin: 0;
-    padding-top: clamp(32px, 5vh, 56px);
+    padding-top: clamp(32px, 5vh, 48px);
     border-top: 1px solid var(--color-hairline);
     letter-spacing: 0;
   }
 
-  @media (max-width: 900px) {
-    .callouts { grid-template-columns: 1fr 1fr; }
+  @media (max-width: 720px) {
+    .callouts { grid-template-columns: 1fr; gap: 40px; }
     .fineprint { grid-template-columns: 1fr; }
-  }
-  @media (max-width: 480px) {
-    .callouts { grid-template-columns: 1fr; gap: 32px; }
   }
 
   [data-revealed="true"] header { transition-delay: 0ms; }
-  [data-revealed="true"] .device-block:nth-of-type(1) { transition-delay: 200ms; }
-  [data-revealed="true"] .device-block:nth-of-type(2) { transition-delay: 360ms; }
-  [data-revealed="true"] .philosophy { transition-delay: 540ms; }
+  [data-revealed="true"] .callouts { transition-delay: 200ms; }
+  [data-revealed="true"] .legend { transition-delay: 360ms; }
+  [data-revealed="true"] .fineprint { transition-delay: 480ms; }
+  [data-revealed="true"] .philosophy { transition-delay: 620ms; }
 </style>

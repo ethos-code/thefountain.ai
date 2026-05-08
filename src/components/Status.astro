@@ -2,8 +2,8 @@
 import SignupForm from './SignupForm.astro';
 ---
 
-<div class="status">
-  <div class="status-content">
+<div class="status frame">
+  <div class="block col-2-3">
     <header class="reveal">
       <p class="eyebrow">Where we are.</p>
       <h2>In research,<br>and listening.</h2>
@@ -22,7 +22,7 @@ import SignupForm from './SignupForm.astro';
     </div>
   </div>
 
-  <div class="status-footer">
+  <div class="status-footer block col-1-4">
     <span>© 2026 Fountain</span>
     <span class="dot" aria-hidden="true">·</span>
     <span>A concept by <a href="mailto:j@mcginn.co">j@mcginn.co</a></span>
@@ -32,17 +32,6 @@ import SignupForm from './SignupForm.astro';
 </div>
 
 <style>
-  .status {
-    max-width: 1280px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-rows: 1fr auto;
-    gap: clamp(48px, 8vh, 96px);
-    min-height: clamp(60vh, 80vh, 100vh);
-  }
-  .status-content {
-    max-width: 640px;
-  }
   .eyebrow {
     font-family: var(--font-mono);
     font-size: 11px;
@@ -85,6 +74,7 @@ import SignupForm from './SignupForm.astro';
     text-transform: uppercase;
     color: var(--color-meta);
     padding-top: clamp(32px, 5vh, 56px);
+    margin-top: clamp(48px, 8vh, 96px);
     border-top: 1px solid var(--color-hairline);
   }
   .status-footer a {

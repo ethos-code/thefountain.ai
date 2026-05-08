@@ -17,7 +17,7 @@ export const scenes: Scene[] = [
   {
     id: 'worn',
     image: worn,
-    alt: 'A small Fountain Pin pinned to the lapel of a denim jacket against a dark backdrop.',
+    alt: 'A small Fountain Pen on the lapel of a denim jacket against a dark backdrop.',
     label: 'On you.',
     body: 'A small presence on your lapel. It sees what you see, hears what you hear. After a day, you forget you’re wearing it.',
   },

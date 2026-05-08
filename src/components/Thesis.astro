@@ -1,61 +1,63 @@
 ---
 ---
 
-<div class="thesis">
-  <p class="reveal lead">You don't need another screen.</p>
-  <p class="reveal">
-    Fountain is a small, considered object. You wear one version on your body.
-    You set the other on a desk. Together they form an ambient AI — projecting
-    useful intelligence into the world where you actually live, instead of
-    pulling you back into a phone.
-  </p>
-  <p class="reveal">
-    A turn arrow on your handlebars when you're somewhere new. The freshness
-    of an avocado, on the avocado. A doorbell on a door without one. A meeting
-    on the table you're already sitting at.
-  </p>
-  <p class="reveal closer">
-    The screen looks back at you.<br>Fountain looks with you.
-  </p>
+<div class="thesis frame">
+  <div class="block col-2-3">
+    <header class="reveal">
+      <p class="eyebrow">A thesis.</p>
+      <h2>
+        The screen looks back at you.<br>
+        Fountain looks with you.
+      </h2>
+    </header>
+
+    <div class="copy">
+      <p class="reveal">
+        Fountain is a small, considered object. You wear one version on your
+        body. You set the other on a desk. Together they form an ambient AI —
+        projecting useful intelligence into the world where you actually live,
+        instead of pulling you back into a phone.
+      </p>
+      <p class="reveal">
+        A turn arrow on your handlebars when you're somewhere new. The freshness
+        of an avocado, on the avocado. A doorbell on a door without one. A meeting
+        on the table you're already sitting at.
+      </p>
+    </div>
+  </div>
 </div>
 
 <style>
-  .thesis {
-    max-width: 760px;
-    margin: 0 auto;
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-meta);
+    margin: 0 0 24px;
   }
-  .thesis p {
+  header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.6vw, 48px);
+    font-weight: 600;
+    letter-spacing: -0.034em;
+    line-height: 1.0;
+    margin: 0 0 1.4em;
+    color: var(--color-ink);
+    max-width: 22ch;
+  }
+  .copy p {
     font-family: var(--font-body);
-    font-size: clamp(18px, 1.7vw, 22px);
-    font-weight: 400;
-    line-height: 1.45;
-    letter-spacing: -0.012em;
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.55;
+    letter-spacing: -0.005em;
     color: var(--color-ink-muted);
     margin: 0 0 1.4em;
-    max-width: 62ch;
+    max-width: 56ch;
   }
-  .thesis p:last-child { margin-bottom: 0; }
+  .copy p:last-child { margin-bottom: 0; }
 
-  .thesis .lead {
-    font-size: clamp(28px, 3.4vw, 44px);
-    font-weight: 600;
-    letter-spacing: -0.032em;
-    line-height: 1.05;
-    color: var(--color-ink);
-    margin-bottom: 1.6em;
-  }
-
-  .thesis .closer {
-    font-size: clamp(28px, 3.4vw, 44px);
-    font-weight: 600;
-    letter-spacing: -0.032em;
-    line-height: 1.05;
-    color: var(--color-ink);
-    margin-top: 2em;
-  }
-
-  [data-revealed="true"] .reveal:nth-child(1) { transition-delay: 0ms; }
-  [data-revealed="true"] .reveal:nth-child(2) { transition-delay: 140ms; }
-  [data-revealed="true"] .reveal:nth-child(3) { transition-delay: 280ms; }
-  [data-revealed="true"] .reveal:nth-child(4) { transition-delay: 480ms; }
+  [data-revealed="true"] header { transition-delay: 0ms; }
+  [data-revealed="true"] .copy p:nth-child(1) { transition-delay: 240ms; }
+  [data-revealed="true"] .copy p:nth-child(2) { transition-delay: 400ms; }
 </style>
