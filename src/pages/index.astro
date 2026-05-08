@@ -10,14 +10,12 @@ import Status from '../components/Status.astro';
 import { sections } from '../lib/sections';
 
 const labelOf = (id: string) => sections.find((s) => s.id === id)?.label ?? '';
-
-const SPLINE_HERO_URL = 'https://my.spline.design/fountainclean-sBz7vvQkxCKWDeB5BG1KqRUQ/';
 ---
 
 <Page>
   <main>
     <section id="hero" data-section="hero" data-section-label={labelOf('hero')}>
-      <Hero iframeUrl={SPLINE_HERO_URL} />
+      <Hero />
     </section>
 
     <section id="thesis" data-section="thesis" data-section-label={labelOf('thesis')}>

@@ -134,16 +134,20 @@ body[data-grid-ready="true"] .g-line {
 
 a { color: inherit; }
 
-/* Universal reveal pattern */
+/* Universal reveal — soft paint wash from out-of-focus to in. */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
+  filter: blur(10px);
+  transform: translateY(6px);
   transition:
-    opacity 900ms var(--ease-out-refined),
-    transform 900ms var(--ease-out-refined);
+    opacity 1400ms var(--ease-out-refined),
+    filter 1400ms var(--ease-out-refined),
+    transform 1400ms var(--ease-out-refined);
+  will-change: opacity, filter, transform;
 }
 [data-revealed="true"] .reveal {
   opacity: 1;
+  filter: blur(0);
   transform: translateY(0);
 }
 
@@ -154,7 +158,7 @@ a { color: inherit; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { opacity: 1; filter: none; transform: none; }
   html, body { scroll-behavior: auto; }
   .g-line { transform: scaleY(1); }
   section[data-section]::before { transform: scaleX(1); }
