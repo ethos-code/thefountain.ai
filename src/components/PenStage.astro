@@ -12,6 +12,36 @@ const SPLINECODE_URL = 'https://prod.spline.design/ACP80S192fjY66ON/scene.spline
     loading-anim-type="none"
     aria-hidden="true"
   ></spline-viewer>
+  <button
+    type="button"
+    class="pen-tap"
+    data-pen-tap
+    aria-label="Open Fountain in 3D"
+    aria-haspopup="dialog"
+  ></button>
+</div>
+
+<div
+  class="pen-modal"
+  data-pen-modal
+  data-spline-url={SPLINECODE_URL}
+  role="dialog"
+  aria-modal="true"
+  aria-label="Fountain 3D view"
+  hidden
+>
+  <button
+    type="button"
+    class="pen-modal-close"
+    data-pen-modal-close
+    aria-label="Close 3D view"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <line x1="20" y1="12" x2="5" y2="12" />
+      <polyline points="12 5, 5 12, 12 19" />
+    </svg>
+  </button>
+  <div class="pen-modal-viewer" data-pen-modal-viewer></div>
 </div>
 
 <script is:inline>
@@ -20,7 +50,8 @@ const SPLINECODE_URL = 'https://prod.spline.design/ACP80S192fjY66ON/scene.spline
     if (!stage) return;
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) return;
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
+    if (reduceMotion || isMobile) return;
 
     let ticking = false;
 
@@ -67,6 +98,50 @@ const SPLINECODE_URL = 'https://prod.spline.design/ACP80S192fjY66ON/scene.spline
   })();
 </script>
 
+<script is:inline>
+  (() => {
+    const tap = document.querySelector('[data-pen-tap]');
+    const modal = document.querySelector('[data-pen-modal]');
+    const closeBtn = document.querySelector('[data-pen-modal-close]');
+    const host = document.querySelector('[data-pen-modal-viewer]');
+    if (!tap || !modal || !closeBtn || !host) return;
+
+    let viewerLoaded = false;
+    let lastFocus = null;
+
+    const open = () => {
+      if (!viewerLoaded) {
+        const url = modal.getAttribute('data-spline-url') || '';
+        const vw = document.createElement('spline-viewer');
+        vw.setAttribute('url', url);
+        vw.setAttribute('loading-anim-type', 'none');
+        host.appendChild(vw);
+        viewerLoaded = true;
+      }
+      lastFocus = document.activeElement;
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.setAttribute('data-open', 'true'));
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    };
+
+    const close = () => {
+      modal.removeAttribute('data-open');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        modal.hidden = true;
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }, 280);
+    };
+
+    tap.addEventListener('click', open);
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.hasAttribute('data-open')) close();
+    });
+  })();
+</script>
+
 <style>
   .pen-stage {
     position: fixed;
@@ -92,8 +167,86 @@ const SPLINECODE_URL = 'https://prod.spline.design/ACP80S192fjY66ON/scene.spline
     display: none;
   }
 
+  .pen-tap {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  .pen-stage[data-fade="true"] .pen-tap {
+    pointer-events: none;
+  }
+  .pen-tap:focus-visible {
+    outline: 1px dashed var(--color-ink);
+    outline-offset: -8px;
+  }
+
+  .pen-modal {
+    position: fixed;
+    inset: 0;
+    background: rgb(10 9 8 / 0.96);
+    backdrop-filter: blur(24px) saturate(1.1);
+    -webkit-backdrop-filter: blur(24px) saturate(1.1);
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 280ms var(--ease-out-refined);
+  }
+  .pen-modal[data-open="true"] {
+    opacity: 1;
+  }
+  .pen-modal-viewer {
+    position: absolute;
+    inset: 0;
+  }
+  .pen-modal-viewer spline-viewer {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+  }
+  .pen-modal-viewer spline-viewer::part(logo) {
+    display: none;
+  }
+
+  .pen-modal-close {
+    position: fixed;
+    top: clamp(24px, 4vh, 44px);
+    left: clamp(20px, 6vw, 32px);
+    z-index: 201;
+    background: transparent;
+    border: 0;
+    color: var(--color-ink);
+    cursor: pointer;
+    padding: 0;
+    width: clamp(36px, 3.4vw, 44px);
+    height: clamp(36px, 3.4vw, 44px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pen-modal-close svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    stroke-width: 1;
+    fill: none;
+    stroke-linecap: square;
+    stroke-linejoin: miter;
+  }
+
   @media (max-width: 900px) {
-    .pen-stage { display: none; }
+    .pen-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .pen-stage {
