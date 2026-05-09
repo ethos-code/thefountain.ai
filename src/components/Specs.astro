@@ -260,7 +260,9 @@ const fineprint: SpecRow[] = [
   }
 
   @media (max-width: 720px) {
-    .callouts { grid-template-columns: 1fr; gap: 32px; }
+    .callouts { gap: 32px 16px; }
+    .big { font-size: clamp(32px, 9vw, 44px); }
+    .caption { max-width: none; }
   }
 
   [data-revealed="true"] header { transition-delay: 0ms; }

@@ -9,12 +9,52 @@ interface Props {
 }
 
 const {
-  title = 'Fountain',
-  description = 'Fountain is an ambient AI device system. The screen looks back at you. Fountain looks with you.',
+  title = 'Fountain — Ambient AI hardware concept',
+  description = 'Fountain is a concept for ambient AI hardware — a wearable Pin and a desktop Stand that project intelligence into the physical world, instead of behind a screen. By John McGinn.',
 } = Astro.props;
 
+const SITE_URL = 'https://thefountain.ai';
+const OG_IMAGE = `${SITE_URL}/assets/og.jpg`;
+const OG_DESCRIPTION = 'A wearable Pin and a desktop Stand that project intelligence into the physical world, instead of behind a screen.';
+const TWITTER_DESCRIPTION = 'A wearable Pin and a desktop Stand that project intelligence into the physical world.';
+const OG_IMAGE_ALT = 'Fountain — Ambient AI hardware concept by John McGinn';
+
 const base = import.meta.env.BASE_URL;
-const ogImage = `${base.replace(/\/$/, '')}/og.jpg`;
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Fountain',
+  url: SITE_URL,
+  description: 'A concept for ambient AI hardware. By John McGinn.',
+  inLanguage: 'en-US',
+};
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Fountain',
+  url: SITE_URL,
+  description: 'A concept for ambient AI hardware — a wearable Pin and a desktop Stand that project intelligence into the physical world.',
+  founder: {
+    '@type': 'Person',
+    name: 'John McGinn',
+    url: 'https://mcginn.co',
+    sameAs: [
+      'https://linkedin.com/in/johnsmcginn',
+      'https://behance.net/mcginnco',
+    ],
+  },
+  sameAs: ['https://mcginn.co'],
+  knowsAbout: [
+    'Ambient AI',
+    'AI hardware',
+    'On-device AI',
+    'Spatial computing',
+    'Agentic AI',
+    'Wearable computing',
+  ],
+};
 ---
 <!doctype html>
 <html lang="en">
@@ -23,13 +63,34 @@ const ogImage = `${base.replace(/\/$/, '')}/og.jpg`;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content="Fountain AI, Fountain AI hardware, ambient AI, AI hardware concept, AI pin, wearable AI, AI pendant, AI device, post-screen computing, ambient computing, on-device AI, spatial AI, agentic AI hardware, John McGinn Fountain" />
+    <meta name="author" content="John McGinn" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="theme-color" content="#0A0908" />
     <meta name="color-scheme" content="dark" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+
+    <link rel="canonical" href={SITE_URL} />
+
     <meta property="og:type" content="website" />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={SITE_URL} />
+    <meta property="og:site_name" content="Fountain" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={OG_DESCRIPTION} />
+    <meta property="og:image" content={OG_IMAGE} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={OG_IMAGE_ALT} />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={TWITTER_DESCRIPTION} />
+    <meta name="twitter:image" content={OG_IMAGE} />
+    <meta name="twitter:image:alt" content={OG_IMAGE_ALT} />
+    <meta name="twitter:creator" content="@johnsmcginn" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)}></script>
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)}></script>
 
     <link rel="icon" type="image/svg+xml" href={`${base.replace(/\/$/, '')}/favicon.svg`} />
 

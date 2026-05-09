@@ -96,7 +96,20 @@ section[data-section="features"] { padding-inline: clamp(16px, 4vw, 64px); }
 .block.col-3-4 { grid-column: 3 / 5; }
 
 @media (max-width: 900px) {
-  .block { grid-column: 1 / 5 !important; }
+  .block {
+    grid-column: 1 / 5 !important;
+    padding-inline: clamp(20px, 6vw, 32px);
+  }
+}
+
+@media (max-width: 720px) {
+  section[data-section] {
+    padding-block: clamp(64px, 10vh, 200px);
+  }
+  section[data-section="features"] {
+    padding-inline: clamp(16px, 4vw, 24px);
+  }
+  .page-grid { display: none; }
 }
 
 /* Page grid — subtle vertical guide lines that draw down on load */

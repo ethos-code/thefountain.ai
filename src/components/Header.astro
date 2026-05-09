@@ -15,25 +15,19 @@ import { sections } from '../lib/sections';
       >
         FOUNTAIN<sup aria-hidden="true">&reg;</sup>
       </button>
-
-      <nav class="nav-inline" aria-label="Sections">
-        {sections
-          .filter((s) => s.id !== 'hero')
-          .map((s) => (
-            <a href={`#${s.id}`} data-target={s.id}>{s.label}</a>
-          ))
-        }
-      </nav>
     </div>
   </div>
 
   <div class="menu-sheet" id="menu-sheet" data-menu-sheet hidden>
     <button type="button" class="menu-close" data-menu-close aria-label="Close menu">
-      <span aria-hidden="true">×</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <line x1="4" y1="4" x2="20" y2="20" />
+        <line x1="20" y1="4" x2="4" y2="20" />
+      </svg>
     </button>
     <div class="menu-inner">
       <ul>
-        {sections.map((s, i) => (
+        {sections.filter((s) => s.id !== 'hero').map((s, i) => (
           <li>
             <a href={`#${s.id}`} data-target={s.id}>
               <span class="idx">{String(i + 1).padStart(2, '0')}</span>
@@ -159,38 +153,6 @@ import { sections } from '../lib/sections';
     }
   }
 
-  /* Inline section nav, right-aligned to col-3 grid line. */
-  .nav-inline {
-    pointer-events: auto;
-    position: absolute;
-    top: clamp(28px, 4vh, 50px);
-    right: 25%;
-    display: flex;
-    align-items: baseline;
-    gap: clamp(14px, 1.6vw, 22px);
-    color: #FFFFFF;
-    mix-blend-mode: difference;
-  }
-  .nav-inline a {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: inherit;
-    text-decoration: none;
-    white-space: nowrap;
-    opacity: 0.55;
-    transition: opacity 200ms ease;
-  }
-  .nav-inline a:hover,
-  .nav-inline a:focus-visible {
-    opacity: 1;
-    outline: none;
-  }
-  @media (max-width: 900px) {
-    .nav-inline { display: none; }
-  }
-
   .menu-sheet {
     position: fixed;
     inset: 0;
@@ -206,11 +168,22 @@ import { sections } from '../lib/sections';
   .menu-sheet[data-open="true"] {
     opacity: 1;
   }
+  .menu-sheet::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    left: max(25%, calc(50% - var(--frame-max) / 4));
+    background: var(--color-hairline);
+    pointer-events: none;
+    z-index: 106;
+  }
 
   .menu-inner {
-    max-width: var(--frame-max);
-    margin: 0 auto;
-    padding: clamp(120px, 18vh, 200px) clamp(24px, 6vw, 96px) clamp(48px, 8vh, 96px);
+    max-width: none;
+    margin: 0;
+    padding: clamp(120px, 18vh, 200px) 0 clamp(48px, 8vh, 96px);
   }
   .menu-inner ul {
     list-style: none;
@@ -224,9 +197,11 @@ import { sections } from '../lib/sections';
     border-bottom: 1px solid var(--color-hairline);
   }
   .menu-inner a {
-    display: flex;
+    max-width: var(--frame-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 25% 1fr;
     align-items: baseline;
-    gap: clamp(20px, 3vw, 36px);
     padding: clamp(20px, 3vh, 32px) 0;
     color: var(--color-ink);
     text-decoration: none;
@@ -242,7 +217,8 @@ import { sections } from '../lib/sections';
     font-size: 11px;
     letter-spacing: 0.18em;
     color: var(--color-meta);
-    min-width: 32px;
+    text-align: right;
+    padding-right: clamp(20px, 3vw, 36px);
   }
   .menu-inner .lbl {
     font-family: var(--font-display);
@@ -251,24 +227,43 @@ import { sections } from '../lib/sections';
     letter-spacing: -0.034em;
     line-height: 1.05;
   }
+  @media (max-width: 720px) {
+    .menu-sheet::before {
+      left: clamp(20px, 6vw, 32px);
+    }
+    .menu-inner a {
+      grid-template-columns: clamp(28px, 8vw, 40px) 1fr;
+      padding-left: clamp(20px, 6vw, 32px);
+      padding-right: clamp(20px, 6vw, 32px);
+    }
+    .menu-inner .idx {
+      text-align: left;
+      padding-right: 0;
+    }
+  }
 
   .menu-close {
     position: fixed;
-    top: clamp(20px, 4vh, 36px);
+    top: clamp(24px, 4vh, 44px);
     right: clamp(24px, 6vw, 96px);
     z-index: 111;
     background: transparent;
     border: 0;
     color: var(--color-ink);
-    font-family: var(--font-display);
-    font-size: 36px;
-    line-height: 1;
     cursor: pointer;
     padding: 0;
-    width: 28px;
-    height: 28px;
+    width: clamp(36px, 3.4vw, 44px);
+    height: clamp(36px, 3.4vw, 44px);
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .menu-close svg {
+    width: 100%;
+    height: 100%;
+    stroke: currentColor;
+    stroke-width: 1;
+    fill: none;
+    stroke-linecap: square;
   }
 </style>

@@ -4,7 +4,7 @@
 <form
   class="signup"
   id="signup"
-  action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID"
+  action="https://script.google.com/macros/s/AKfycbwDbSwCpoCIX-g_8znys58h1BksCpVCUfTn6EUCN-AsCvnKZAmmHmWZcxFm5kDX6L1d/exec"
   method="POST"
   novalidate
 >
@@ -17,7 +17,6 @@
     placeholder="email"
     required
   />
-  <input type="hidden" name="_subject" value="Fountain — waitlist signup" />
   <button type="submit" class="signup-submit">Stay close</button>
 </form>
 <div class="signup-msg" aria-live="polite" id="signup-msg"></div>
@@ -29,7 +28,6 @@
     const msg = document.getElementById('signup-msg');
     const input = form.querySelector('input[type="email"]');
     const button = form.querySelector('button[type="submit"]');
-    const OWNER = 'j@mcginn.co';
 
     const setMsg = (text, state) => {
       if (!msg) return;
@@ -48,31 +46,13 @@
       }
 
       const action = form.getAttribute('action') || '';
-      const isPlaceholder = action.includes('REPLACE_WITH_YOUR_FORM_ID');
-
-      if (isPlaceholder) {
-        const subject = encodeURIComponent('Fountain — waitlist');
-        const body = encodeURIComponent(`Add me to the Fountain waitlist:\n\n${email}`);
-        window.location.href = `mailto:${OWNER}?subject=${subject}&body=${body}`;
-        setMsg('Opening your mail app — please send to confirm.', 'success');
-        return;
-      }
-
       button.disabled = true;
       setMsg('Sending…');
       try {
-        const res = await fetch(action, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { Accept: 'application/json' },
-        });
-        if (res.ok) {
-          form.style.display = 'none';
-          setMsg("You’re in 🤍", 'success');
-        } else {
-          setMsg('Something went wrong. Try again?', 'error');
-          button.disabled = false;
-        }
+        const body = new URLSearchParams({ email, source: 'thefountain.ai' });
+        await fetch(action, { method: 'POST', mode: 'no-cors', body });
+        form.style.display = 'none';
+        setMsg("You’re in 🤍", 'success');
       } catch {
         setMsg('Network error. Try again?', 'error');
         button.disabled = false;
