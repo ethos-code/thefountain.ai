@@ -100,6 +100,7 @@ section[data-section="features"] { padding-inline: clamp(16px, 4vw, 64px); }
     grid-column: 1 / 5 !important;
     padding-inline: clamp(20px, 6vw, 32px);
   }
+  .page-grid { display: none; }
 }
 
 @media (max-width: 720px) {
@@ -109,7 +110,6 @@ section[data-section="features"] { padding-inline: clamp(16px, 4vw, 64px); }
   section[data-section="features"] {
     padding-inline: clamp(16px, 4vw, 24px);
   }
-  .page-grid { display: none; }
 }
 
 /* Page grid — subtle vertical guide lines that draw down on load */
