@@ -172,7 +172,7 @@ const fineprint: SpecRow[] = [
     align-items: baseline;
     gap: clamp(6px, 0.8vw, 12px);
     font-family: var(--font-mono);
-    font-size: clamp(40px, 5.6vw, 72px);
+    font-size: clamp(30px, 4.2vw, 54px);
     font-weight: 400;
     letter-spacing: -0.04em;
     line-height: 1;
@@ -261,8 +261,17 @@ const fineprint: SpecRow[] = [
 
   @media (max-width: 720px) {
     .callouts { gap: 32px 16px; }
-    .big { font-size: clamp(32px, 9vw, 44px); }
+    .big { font-size: clamp(24px, 6.75vw, 33px); }
     .caption { max-width: none; }
+    .fineprint li {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 12px 0;
+    }
+    .fp-value {
+      text-align: left;
+      font-size: 12px;
+    }
   }
 
   [data-revealed="true"] header { transition-delay: 0ms; }
